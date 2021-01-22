@@ -1,0 +1,40 @@
+
+<!-- Title group  -->
+<div class="title-group">
+  <h1 class="mat-h1">Add Project </h1>
+  <mat-divider fxFlex="1 0"></mat-divider>
+</div>
+
+<!-- Form -->
+<div class="inner-wrapper">
+  <form [formGroup]="projects" (ngSubmit)="submitAddProjectsForm()" #resetProjectsForm="ngForm" novalidate>
+    <!-- Left block -->
+    <mat-card>
+      <div class="controlers-wrapper">
+        <!-- Name -->
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Project Name" formControlName="PROJECT_NAME">
+          <mat-error *ngIf="handleError('PROJECT_NAME', 'required')">
+            You must provide a<strong> PROJECT_NAME</strong>
+          </mat-error>
+        </mat-form-field>
+        </div>
+        </mat-card>
+      <br/>
+
+          <mat-slide-toggle  name="PROCESS_Y_N" (change)="processChange($event)">Process</mat-slide-toggle>&nbsp;
+         
+          <mat-slide-toggle  name="CONTRACTUAL_Y_N" (change)="contractChange($event)">Contractual</mat-slide-toggle>
+        
+      
+
+      
+
+    <!-- Submit & Reset -->
+   
+        <div class="button-wrapper">
+          <button mat-flat-button color="warn">Submit</button>
+        </div>
+      
+  </form>
+</div>

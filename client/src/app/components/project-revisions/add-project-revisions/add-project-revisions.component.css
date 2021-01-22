@@ -1,0 +1,22 @@
+#main {
+    width: 200px;
+    border: 1px dotted black;
+  }
+  h1 {
+    margin: 0;
+      display: inline-block;
+  }
+  .top-btn {
+    float: right;
+   
+  }
+  .mat-divider{
+      margin-top:10px;
+  }
+
+  .view-table{
+      margin-top:5%;
+  }
+  .action-btns{
+     margin-left:35%;
+  }

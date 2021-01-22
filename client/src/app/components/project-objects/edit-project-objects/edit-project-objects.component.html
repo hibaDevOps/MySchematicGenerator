@@ -1,0 +1,51 @@
+
+<!-- Title group  -->
+<div class="title-group">
+  <h1 class="mat-h1">Edit Objects </h1>
+  <mat-divider fxFlex="1 0"></mat-divider>
+</div>
+
+<!-- Form -->
+<div class="inner-wrapper">
+  <form [formGroup]="projects" (ngSubmit)="submitEditProjectsObjForm()" #resetProjectsObjForm="ngForm" novalidate>
+    <!-- Left block -->
+   
+        <!-- Name -->
+       
+
+      <mat-form-field appearance="fill">
+        <mat-label>Component</mat-label>
+        <mat-select (selectionChange)="selectComponent($event)" formControlName="COMPONENT_ID">
+          <mat-option *ngFor="let comp of components" [value]="comp._id">
+            {{comp.COMPONENT_NAME}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br/>
+      <mat-form-field appearance="fill">
+        <mat-label>SERVICE</mat-label>
+        <mat-select (selectionChange)="selectService($event)" formControlName="SERVICE_ID">
+          <mat-option *ngFor="let serv of services" [value]="serv._id">
+            {{serv.SERVICE_NAME}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+    <br/>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Service Alias" formControlName="SERVICE_ALIAS">
+        <mat-error *ngIf="handleError('SERVICE_ALIAS', 'required')">
+          You must provide a<strong> Service Alias</strong>
+        </mat-error>
+      </mat-form-field>
+
+      
+
+    <!-- Submit & Reset -->
+   
+        <div class="button-wrapper">
+          <button mat-flat-button color="warn">Submit</button>
+        </div>
+      
+  </form>
+</div>

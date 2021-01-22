@@ -1,0 +1,10 @@
+.matBtn{
+    padding: 2px 14px;
+    line-height: 25px;
+    margin-left: 20px;
+    margin-top: 20px;
+    background: #3095ff;
+    color:white;
+    border-radius: 5px;
+    white-space: nowrap;
+}

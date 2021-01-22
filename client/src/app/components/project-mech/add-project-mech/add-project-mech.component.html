@@ -1,0 +1,194 @@
+
+<!-- Title group  -->
+<div class="title-group">
+  <h1 class="mat-h1">Add Mechanical Schedule </h1>
+  <mat-divider fxFlex="1 0"></mat-divider>
+</div>
+
+<!-- Form -->
+<div class="inner-wrapper">
+  <form [formGroup]="projects" (ngSubmit)="submitAddProjectsMechForm()" #resetProjectsMechForm="ngForm" novalidate>
+    <!-- Left block -->
+  <mat-card>
+    <mat-form-field appearance="fill">
+      <mat-label>COMPONENT</mat-label>
+      <mat-select  formControlName="COMPONENT_ID">
+        <mat-option *ngFor="let serv of components" [value]="serv._id">
+          {{serv.COMPONENT_NAME}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    </mat-card>
+    <mat-card>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="REF_NO" formControlName="REF_NO">
+      <mat-error *ngIf="handleError('REF_NO', 'required')">
+        You must provide a<strong> REF_NO</strong>
+      </mat-error>
+    </mat-form-field>
+    </mat-card>
+    <mat-card>
+      <mat-form-field appearance="fill">
+        <mat-label>Level</mat-label>
+        <mat-select  formControlName="LEVEL">
+          <mat-option *ngFor="let serv of level" [value]="serv">
+            {{serv}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </mat-card>
+    <mat-card>
+      <mat-form-field appearance="fill">
+        <mat-label>Service Description</mat-label>
+        <mat-select  formControlName="SERVICE_DESCRIPTION">
+          <mat-option *ngFor="let serv of services" [value]="serv._id">
+            {{serv.SERVICE_NAME}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card>
+    <mat-card>
+      <mat-form-field appearance="fill">
+        <mat-label>Service Size</mat-label>
+        <mat-select  formControlName="SERVICE_SIZE">
+          <mat-option *ngFor="let serv of services_size" [value]="serv.SIZE_VALUE">
+            {{serv.SIZE_VALUE}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card>
+
+    <mat-card>
+      <mat-form-field appearance="fill">
+        <mat-label>Pipe Class</mat-label>
+        <mat-select  formControlName="PIPE_CLASS">
+          <mat-option *ngFor="let serv of pipe_class" [value]="serv._id">
+            {{serv.PIPE_NAME}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card>
+    <mat-card>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Connection type size" formControlName="CONNECTION_TYPE_SIZE">
+        <mat-error *ngIf="handleError('CONNECTION_TYPE_SIZE', 'required')">
+          You must provide a<strong> Connection type size</strong>
+        </mat-error>
+      </mat-form-field>
+      </mat-card>
+      <mat-card>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="UM_TEMP_MIN" formControlName="UM_TEMP_MIN">
+          <mat-error *ngIf="handleError('UM_TEMP_MIN', 'required')">
+            You must provide a<strong> UM_TEMP_MIN</strong>
+          </mat-error>
+        </mat-form-field>
+        </mat-card>
+        <mat-card>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="UM_TEMP_MAX" formControlName="UM_TEMP_MAX">
+            <mat-error *ngIf="handleError('UM_TEMP_MAX', 'required')">
+              You must provide a<strong> UM_TEMP_MAX</strong>
+            </mat-error>
+          </mat-form-field>
+          </mat-card>
+          <mat-card>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="UM_TEMP_UNIT" formControlName="UM_TEMP_UNIT">
+              <mat-error *ngIf="handleError('UM_TEMP_UNIT', 'required')">
+                You must provide a<strong> UM_TEMP_UNIT</strong>
+              </mat-error>
+            </mat-form-field>
+            </mat-card>
+            <mat-card>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="UM_PRES_MIN" formControlName="UM_PRES_MIN">
+                <mat-error *ngIf="handleError('UM_PRES_MIN', 'required')">
+                  You must provide a<strong> UM_PRES_MIN</strong>
+                </mat-error>
+              </mat-form-field>
+              </mat-card>
+              <mat-card>
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="UM_PRES_MAX" formControlName="UM_PRES_MAX">
+                  <mat-error *ngIf="handleError('UM_PRES_MAX', 'required')">
+                    You must provide a<strong> UM_PRES_MAX</strong>
+                  </mat-error>
+                </mat-form-field>
+                </mat-card>
+                <mat-card>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="UM_PRES_UNIT" formControlName="UM_PRES_UNIT">
+                    <mat-error *ngIf="handleError('UM_PRES_UNIT', 'required')">
+                      You must provide a<strong> UM_PRES_UNIT</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  </mat-card>
+                  <mat-card>
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="UM_FLOW_MIN" formControlName="UM_FLOW_MIN">
+                      <mat-error *ngIf="handleError('UM_FLOW_MIN', 'required')">
+                        You must provide a<strong> UM_FLOW_MIN</strong>
+                      </mat-error>
+                    </mat-form-field>
+                    </mat-card>
+                    <mat-card>
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="UM_FLOW_MAX" formControlName="UM_FLOW_MAX">
+                        <mat-error *ngIf="handleError('UM_FLOW_MAX', 'required')">
+                          You must provide a<strong> UM_FLOW_MAX</strong>
+                        </mat-error>
+                      </mat-form-field>
+                      </mat-card>
+                      <mat-card>
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="UM_FLOW_UNIT" formControlName="UM_FLOW_UNIT">
+                          <mat-error *ngIf="handleError('UM_FLOW_UNIT', 'required')">
+                            You must provide a<strong> UM_FLOW_UNIT</strong>
+                          </mat-error>
+                        </mat-form-field>
+                        </mat-card>
+                        <mat-card>
+                          <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Service Connection" formControlName="SERVICE_CONN">
+                            <mat-error *ngIf="handleError('SERVICE_CONN', 'required')">
+                              You must provide a<strong> Service Connection</strong>
+                            </mat-error>
+                          </mat-form-field>
+                          </mat-card>
+                          <mat-card>
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="END_REF_NO" formControlName="END_REF_NO">
+                              <mat-error *ngIf="handleError('END_REF_NO', 'required')">
+                                You must provide a<strong> END_REF_NO</strong>
+                              </mat-error>
+                            </mat-form-field>
+                            </mat-card>
+                            <mat-card>
+                              <mat-form-field class="example-full-width">
+                                <input matInput placeholder="OPE" formControlName="OPE">
+                                <mat-error *ngIf="handleError('OPE', 'required')">
+                                  You must provide a<strong> OPE</strong>
+                                </mat-error>
+                              </mat-form-field>
+                              </mat-card>
+                              <mat-card>
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Notes" formControlName="NOTES">
+                                  <mat-error *ngIf="handleError('NOTES', 'required')">
+                                    You must provide a<strong> Notes</strong>
+                                  </mat-error>
+                                </mat-form-field>
+                                </mat-card>
+
+      
+
+    <!-- Submit & Reset -->
+   
+        <div class="button-wrapper">
+          <button mat-flat-button color="warn">Submit</button>
+        </div>
+      
+  </form>
+</div>

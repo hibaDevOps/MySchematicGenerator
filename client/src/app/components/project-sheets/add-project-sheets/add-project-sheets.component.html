@@ -1,0 +1,89 @@
+
+<!-- Title group  -->
+<div class="title-group">
+  <h1 class="mat-h1">Add Sheet Register </h1>
+  <mat-divider fxFlex="1 0"></mat-divider>
+</div>
+
+<!-- Form -->
+<div class="inner-wrapper">
+  <form [formGroup]="projects" (ngSubmit)="submitAddProjectsSheetForm()" #resetProjectsSheetForm="ngForm" novalidate>
+    <!-- Left block -->
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Item name" formControlName="ITEM_NAME">
+      <mat-error *ngIf="handleError('ITEM_NAME', 'required')">
+        You must provide a<strong> Item Name</strong>
+      </mat-error>
+    </mat-form-field>
+    <br/>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Description A" formControlName="DESCRIPTION_A">
+      <mat-error *ngIf="handleError('DESCRIPTION_A', 'required')">
+        You must provide a<strong> Description A</strong>
+      </mat-error>
+    </mat-form-field>
+    <br/>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Description B" formControlName="DESCRIPTION_B">
+      <mat-error *ngIf="handleError('DESCRIPTION_B', 'required')">
+        You must provide a<strong> Description B</strong>
+      </mat-error>
+    </mat-form-field>
+    <br/>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Description C" formControlName="DESCRIPTION_C">
+      <mat-error *ngIf="handleError('DESCRIPTION_C', 'required')">
+        You must provide a<strong> Description A</strong>
+      </mat-error>
+    </mat-form-field>
+    <br/>
+        <!-- Name -->
+        <mat-form-field appearance="fill">
+          <mat-label>Section</mat-label>
+          <mat-select  formControlName="SECTION">
+            <mat-option *ngFor="let serv of section" [value]="serv">
+              {{serv}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+      <br/>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Item No</mat-label>
+        <mat-select formControlName="ITEM_NO">
+          <mat-option *ngFor="let comp of item_no" [value]="comp">
+            {{comp}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br/>
+      <mat-form-field>
+        <input matInput readonly [matDatepicker]="picker" placeholder="Date Issued"
+          (dateChange)="formatDate($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="handleError('DATE_ISSUED', 'required')">
+         Date of issued is required
+        </mat-error>
+      </mat-form-field>
+      <br/>
+      <mat-form-field appearance="fill">
+        <mat-label>Rev Issued</mat-label>
+        <mat-select formControlName="REV_ISSUED">
+          <mat-option *ngFor="let comp of rev_issued" [value]="comp">
+            {{comp}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      
+
+    <!-- Submit & Reset -->
+   
+        <div class="button-wrapper">
+          <button mat-flat-button color="warn">Submit</button>
+        </div>
+      
+  </form>
+</div>

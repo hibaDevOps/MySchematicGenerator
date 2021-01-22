@@ -1,0 +1,125 @@
+<!-- Title group  -->
+<div class="title-group">
+  <div class="main">
+    <h1 class="mat-h1">Projects</h1>
+
+    </div>
+  <mat-divider class="mat-divider" ></mat-divider>
+</div>
+
+<div class="container view-table" >
+    <div class="mat-elevation-z8">
+      <form class="search-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Search</mat-label>
+          <input matInput placeholder="Project Name" (keyup)="filterFormControls($event)">
+        </mat-form-field>
+      </form>
+
+<form [formGroup]="userTable"  >
+  <table  class="table " matSort (matSortChange)="sortData($event)">
+    <thead class="text-nowrap">
+      <th mat-sort-header="PROJECT_NAME">Project name</th>
+      <th>Process</th>
+      <th>Contractual</th>
+      <th>Action</th>
+
+    </thead>
+    <tbody>
+      <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls | paginate:config ; let i=index ">
+        <tr *ngIf="group.get('isEditable').value" [formGroupName]="fieldGlobalIndex(i)">
+          <td>
+            <mat-form-field>
+              <input matInput type="text" formControlName="PROJECT_NAME">
+              <mat-error *ngIf="group.get('PROJECT_NAME').errors && formSubmitAttempt ">
+                You must provide a unique<br/><strong> Project name</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+          <td>
+              <mat-slide-toggle formControlName="PROCESS_Y_N"   (change)="processChange($event,group)" [checked]="group.value.PROCESS_Y_N == 1">Process</mat-slide-toggle>
+          </td>
+          <td>
+              <mat-slide-toggle formControlName="CONTRACTUAL_Y_N"   (change)="contractChange($event,group)"[checked]="group.value.CONTRACTUAL_Y_N == 1">Contractual</mat-slide-toggle>
+          </td>
+            <td>
+              <div class="action-btns">
+           
+                <button  mat-raised-button color="primary" class="push-right"
+                  (click)="doneRow(group)">Save</button>
+                <button *ngIf="isDelete" mat-raised-button color="accent" (click)="deleteRow(fieldGlobalIndex(i),group)">Delete</button>
+                <button  mat-raised-button color="accent" (click)="cancel(group)">Cancel</button>
+
+              </div>
+             
+            </td>
+        </tr>
+        <tr *ngIf="!group.get('isEditable').value" >
+         
+          <td>
+            {{group.get('PROJECT_NAME').value}}
+          </td>
+         <td>
+          {{group.get('PROCESS_Y_N').value?1:0}}
+
+         </td>
+         <td>
+          {{group.get('CONTRACTUAL_Y_N').value?1:0}}
+
+         </td>
+          <td>
+            <div class="action-btns">
+              <button  [matMenuTriggerFor]="menu" mat-raised-button color="primary" class="push-right">
+                <mat-icon>more_vert</mat-icon>
+                <span>Menu</span>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item [routerLink]="['/project_rev/getAll/',group.value._id]">
+                  <mat-icon>autorenew</mat-icon>
+                  <span>Revisions</span>
+                </button>
+                <button mat-menu-item [routerLink]="['/project_obj/getAll/',group.value._id]">
+                  <mat-icon>check_circle</mat-icon>
+                  <span>Objects</span>
+                </button>
+                <button mat-menu-item [routerLink]="['/project_sheet/getAll/',group.value._id]">
+                  <mat-icon>lock</mat-icon>
+                  <span>Register Sheet</span>
+                </button>
+                <button mat-menu-item  [routerLink]="['/project_mech/getAll/',group.value._id]"> 
+                  <mat-icon>schedule</mat-icon>
+                  <span>Mechanical Schedule</span>
+                </button>
+                <button mat-menu-item  [routerLink]="['/project-service-data/getAll/',group.value._id]"> 
+                  <mat-icon>schedule</mat-icon>
+                  <span>Electrical Schedule</span>
+                </button>
+                <button mat-menu-item [routerLink]="['/project_notes/getAll/',group.value._id]">
+                  <mat-icon>chat_bubble_outline</mat-icon>
+                  <span>Notes</span>
+                </button>
+                <button mat-menu-item [routerLink]="['/generate-pdf/',group.value._id]">
+                  <mat-icon>cloud_download</mat-icon>
+                  <span>Generate PDF</span>
+                </button>               
+              </mat-menu>
+            <button  mat-raised-button color="primary" class="push-right"
+                  (click)="editRow(group)">Edit</button>
+                  </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+    <div class="action-container">
+      <button mat-raised-button type="submit" color="primary" (click)="addRow()">Add row</button>
+    </div>
+    <div style="float:right">
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+</div>
+  </table>
+  
+</form>
+
+</div>
+
+</div>

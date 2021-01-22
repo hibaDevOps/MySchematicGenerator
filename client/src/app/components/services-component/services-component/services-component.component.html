@@ -1,0 +1,79 @@
+<!-- Title group  -->
+<div class="title-group">
+  <div class="main">
+    <h1 class="mat-h1">COMPONENT</h1>
+
+    </div>
+  <mat-divider class="mat-divider" ></mat-divider>
+</div>
+<br/>
+<div class="container view-table" >
+    <div class="mat-elevation-z8">
+<form [formGroup]="userTable">
+  <table  class="table ">
+    <thead class="text-nowrap">
+      <th>Component Name</th>
+      <th>Services</th>
+    
+      <th>Action</th>
+
+    </thead>
+    <tbody>
+      <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls | paginate:config ; let i=index">
+        <tr *ngIf="group.get('isEditable').value" [formGroupName]="fieldGlobalIndex(i)">
+          <td>
+            <mat-form-field class="matForm">
+              <input matInput type="text" formControlName="COMPONENT_NAME">
+              <mat-error *ngIf="group.get('COMPONENT_NAME').errors && formSubmitAttempt ">
+                You must provide a unique<strong> component name</strong>
+              </mat-error>
+              
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select [formControl]="toppings" #sel multiple>
+                <mat-option *ngFor="let topping of AllService" [value]="topping._id" [selected]="group.get('SERVICE').value.includes(topping._id)" (onSelectionChange)="SelectServices(group,$event,sel)" >{{topping.SERVICE_NAME}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+         
+            <td>
+              <div class="action-btns">
+
+              <button  mat-raised-button color="primary" class="push-right"
+              (click)="doneRow(group)">Save</button>
+            <button *ngIf="isDelete"  mat-raised-button color="accent" (click)="deleteRow(fieldGlobalIndex(i),group)" class="push-right" >Delete</button>
+            <button  mat-raised-button color="accent" (click)="cancel(group)" >Cancel</button>
+  
+          </div>
+            </td>
+        </tr>
+        <tr *ngIf="!group.get('isEditable').value" >
+         
+          <td>
+            {{group.get('COMPONENT_NAME').value}}
+          </td>
+          <td >
+            <span *ngFor="let services of group.value.SERVICE"> <p >{{retrieveService(services)}}</p> </span>
+          </td>
+        
+          <td>
+            <div class="action-btns">
+            <button  mat-raised-button color="primary" class="push-right"
+            (click)="editRow(group)">Edit</button>    
+          </div>
+                </td>
+        </tr>
+      </ng-container>
+    </tbody>
+    <div style="float:right">
+      <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+  </div>
+  </table>
+  <div class="action-container">
+    <button mat-raised-button type="submit" color="primary" (click)="addRow()">Add row</button>
+  </div>
+</form>
+</div>
+</div>

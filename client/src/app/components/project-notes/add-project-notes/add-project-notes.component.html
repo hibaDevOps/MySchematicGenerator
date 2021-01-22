@@ -1,0 +1,41 @@
+
+<!-- Title group  -->
+<div class="title-group">
+  <h1 class="mat-h1">Add Project Note </h1>
+  <mat-divider fxFlex="1 0"></mat-divider>
+</div>
+
+<!-- Form -->
+<div class="inner-wrapper">
+  <form [formGroup]="projects" (ngSubmit)="submitAddProjectsNotesForm()" #resetProjectsNotesForm="ngForm" novalidate>
+    <!-- Left block -->
+   
+        <!-- Name -->
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Notes Text" formControlName="NOTE_TEXT">
+          <mat-error *ngIf="handleError('NOTE_TEXT', 'required')">
+            You must provide a<strong> NOTE TEXT</strong>
+          </mat-error>
+        </mat-form-field>
+        <br/>
+      <mat-form-field appearance="fill">
+        <mat-label>Note Category</mat-label>
+        <mat-select formControlName="NOTE_CATEGORY">
+          <mat-option *ngFor="let comp of section" [value]="comp">
+            {{comp}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br/>
+     
+
+      
+
+    <!-- Submit & Reset -->
+   
+        <div class="button-wrapper">
+          <button mat-flat-button color="warn">Submit</button>
+        </div>
+      
+  </form>
+</div>

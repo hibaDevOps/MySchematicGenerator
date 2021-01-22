@@ -1,0 +1,48 @@
+
+<!-- Title group  -->
+<div class="title-group">
+  <h1 class="mat-h1">Edit Pipe Class </h1>
+  <mat-divider fxFlex="1 0"></mat-divider>
+</div>
+
+<!-- Form -->
+<div class="inner-wrapper">
+  <form [formGroup]="pipes" (ngSubmit)="submitEditPipesForm()" #resetPipesForm="ngForm" novalidate>
+    <!-- Left block -->
+    <mat-card>
+      <div class="controlers-wrapper">
+        <!-- Name -->
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Pipe Name" formControlName="PIPE_NAME">
+          <mat-error *ngIf="handleError('PIPE_NAME', 'required')">
+            You must provide a<strong> Pipe name</strong>
+          </mat-error>
+        </mat-form-field>
+
+        </div>
+        </mat-card>
+        <br/>
+        <mat-card *ngIf = "AllServices.length > 0" class="PipeData">
+          <div >
+            <p>Select Services for this Pipe:</p>
+            <div *ngFor="let pipes of AllServices; let i = index" >
+              <label>
+                <input type="checkbox" [checked]="ServiceData.includes(pipes._id)" [value]="pipes._id" (change)="onCheckboxChange($event)" />
+                {{pipes.SERVICE_NAME}}
+              </label>
+           </div>  
+          </div>
+        </mat-card>
+      
+
+    <!-- Submit & Reset -->
+    <mat-card>
+      <div class="full-wrapper button-wrapper">
+        <div class="button-wrapper">
+          <button mat-flat-button color="warn">Submit</button>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+</div>
+

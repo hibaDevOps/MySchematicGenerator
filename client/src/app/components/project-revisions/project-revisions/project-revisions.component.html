@@ -1,0 +1,138 @@
+<!-- Title group  -->
+<div class="title-group">
+  <div class="main">
+    <h1 class="mat-h1">{{projectName}} - Project Revision </h1>
+    <button  [matMenuTriggerFor]="menu" class="top-btn" mat-raised-button color="basic">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['/project_rev/getAll/',projectId]">
+        <mat-icon>autorenew</mat-icon>
+        <span>Revisions</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/project_obj/getAll/',projectId]">
+        <mat-icon>check_circle</mat-icon>
+        <span>Objects</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/project_sheet/getAll/',projectId]">
+        <mat-icon>lock</mat-icon>
+        <span>Register Sheet</span>
+      </button>
+      <button mat-menu-item  [routerLink]="['/project_mech/getAll/',projectId]"> 
+        <mat-icon>schedule</mat-icon>
+        <span>Mechanical Schedule</span>
+      </button>
+      <button mat-menu-item  [routerLink]="['/project-service-data/getAll/',projectId]"> 
+        <mat-icon>schedule</mat-icon>
+        <span>Electrical Schedule</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/project_notes/getAll/',projectId]">
+        <mat-icon>chat_bubble_outline</mat-icon>
+        <span>Notes</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/generate-pdf/',projectId]">
+        <mat-icon>cloud_download</mat-icon>
+        <span>Generate PDF</span>
+      </button>               
+    </mat-menu>
+    </div>
+  <mat-divider class="mat-divider" ></mat-divider>
+</div>
+
+<div class="container view-table" >
+    <div class="mat-elevation-z8">
+<form [formGroup]="userTable"  >
+  <table  class="table " >
+    <thead class="text-nowrap">
+      <th>Revision Name</th>
+      <th>Revision No.</th>
+      <th>Revision Date</th>
+      <th>Action</th>
+
+    </thead>
+    <tbody>
+      <ng-container *ngIf="getFormControls.controls.length <= 0">
+      <tr  class="no-data">There is no Project Revision added yet!</tr>
+    </ng-container>
+      <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls | paginate:config ; let i=index ">
+        
+        <tr *ngIf="group.get('isEditable').value" [formGroupName]="fieldGlobalIndex(i)">
+          <td>
+            <mat-form-field>
+              <input matInput type="text" formControlName="REV_NAME">
+              <mat-error *ngIf="group.get('REV_NAME').errors && formSubmitAttempt ">
+                You must provide a<strong> Revision Name</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+         <td>
+          <mat-form-field>
+            <mat-select  formControlName="REV_NO">
+              <mat-option *ngFor="let rev of revno" [value]="rev" [selected]="group.value.REV_NO == rev">
+                {{rev}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="group.get('REV_NO').errors && formSubmitAttempt ">
+              You must select a<strong> Revision no.</strong>
+            </mat-error>
+          </mat-form-field>
+         </td>
+         <td>
+          <mat-form-field>
+            <input matInput matInput [matDatepicker]="picker" formControlName="DATE_REV"  (dateChange)="formatDate($event,group)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="group.get('DATE_REV').errors && formSubmitAttempt ">
+              You must provide a<strong> Revision Date </strong>
+            </mat-error>
+        </mat-form-field>
+
+         </td>
+            <td>
+              <div class="action-btns">
+           
+                <button  mat-raised-button color="primary" class="push-right"
+                  (click)="doneRow(group)">Save</button>
+                <button *ngIf="isDelete"  mat-raised-button color="accent" (click)="deleteRow(fieldGlobalIndex(i),group)" class="push-right">Delete</button>
+                <button  mat-raised-button color="accent" (click)="cancel(group)">Cancel</button>
+ 
+              </div>
+             
+            </td>
+        </tr>
+        <tr *ngIf="!group.get('isEditable').value" >
+         
+          <td>
+            {{group.get('REV_NAME').value}}
+          </td>
+         <td>
+          {{group.get('REV_NO').value}}
+
+         </td>
+         <td>
+          
+            {{formatDateDisplay(group.get('DATE_REV').value)}}
+         
+         </td>
+          <td>
+            <div class="action-btns">
+            <button  mat-raised-button color="primary" class="push-right"
+            (click)="editRow(group)">Edit</button>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+    <div class="action-container">
+      <button mat-raised-button type="submit" color="primary" (click)="addRow()">Add row</button>
+    </div>
+    <div style="float:right">
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+</div>
+  </table>
+  
+</form>
+
+</div>
+
+</div>

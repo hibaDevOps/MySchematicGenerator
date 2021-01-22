@@ -1,0 +1,70 @@
+<!-- Toolbar -->
+<mat-toolbar color="primary" class="header">
+  <div><img src="../assets/img/Quicktul_logo.png" class="logo" /></div>
+  <div *ngIf="!isLogged"><a href="javascript:void(0)" (click)="login()" style="color:#fff">login</a></div>
+  
+  <span *ngIf="isLogged" class="nav-tool-items">
+    <mat-icon (click)="sidenav.toggle()" class="hamburger">menu</mat-icon>
+  </span>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <!-- Sidenav -->
+  <mat-sidenav  #sidenav [mode]="isBiggerScreen() ? 'over' : 'side'" [(opened)]="opened" [fixedInViewport]="true"
+    [fixedTopGap]>
+    
+    <mat-nav-list class="projectItem" *ngIf="isLogged">
+       
+          <a style="padding-left: 8;" mat-list-item  routerLink="/project/getAll" *ngIf="isLogged">
+            Projects       
+          </a>
+          <a style="padding-left: 8; text-transform: capitalize;" mat-list-item  routerLink="/login" *ngIf="!isLogged">
+            Login       
+          </a>
+    <mat-accordion class="example-headers-align" *ngIf="isLogged">
+      <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header>
+            Master
+        </mat-expansion-panel-header>
+        <mat-nav-list dense >
+          <a mat-list-item routerLinkActive="active" (click)="navigate('service-size')" >
+            <mat-icon>photo_size_select_small</mat-icon> Services Size
+          </a>
+          <a mat-list-item routerLinkActive="active" routerLink="/services/getAll">
+            <mat-icon>miscellaneous_services</mat-icon> Services 
+          </a>
+          <a mat-list-item routerLinkActive="active" routerLink="/pipes/getAll">
+            <mat-icon>gesture</mat-icon> Pipes 
+          </a>
+          <a mat-list-item routerLinkActive="active" routerLink="/component/getAll">
+            <mat-icon>settings_input_component</mat-icon> Components 
+          </a>
+          <a mat-list-item routerLinkActive="active" routerLink="/upload_templates">
+            <mat-icon>cloud_download</mat-icon>Templates
+          </a>
+         </mat-nav-list>
+    </mat-expansion-panel>
+    </mat-accordion>
+   
+     
+    <a style="padding-left: 8;" mat-list-item  *ngIf="!isAdmin" routerLink="/billing/create-subscription">
+      Manage Subscription       
+    </a>
+    
+    
+     <!-- <a mat-list-item routerLinkActive="active" routerLink="/students-list">
+        <mat-icon>format_list_bulleted</mat-icon> View Students
+      </a>-->
+      <a style="padding-left: 8; margin-top:10px" mat-list-item  (click)="logout()" >
+        Logout       
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main content -->
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+  
+</mat-sidenav-container>
+<ng4-loading-spinner> </ng4-loading-spinner>

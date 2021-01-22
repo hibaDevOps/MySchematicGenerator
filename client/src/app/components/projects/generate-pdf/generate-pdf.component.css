@@ -1,0 +1,13 @@
+#graphContainer, graphContainerCover,#eqpContainer, .mxdrawings{
+   
+    left: -9999px; 
+    position: absolute;
+    top: 0px;  
+
+}
+ 
+
+.selectstyle{
+    width:30%;
+    margin: 10px 20px;
+}

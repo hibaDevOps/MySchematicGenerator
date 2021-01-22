@@ -1,0 +1,17 @@
+.projectItem{
+    background: white;
+    /* padding: 24px; */
+    font-size: 15;
+}
+.disabled-pointer {
+    pointer-events: none;
+  }
+  .mat-dialog-container{
+      height: 600px!important;
+  }
+  .mat-drawer.mat-drawer-side {
+    z-index: 1 !important;
+  }
+  .logo{
+    width:100px;
+  }

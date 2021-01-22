@@ -1,0 +1,80 @@
+<!-- Title group  -->
+<div class="title-group">
+  <div class="main">
+    <h1 class="mat-h1">Services</h1>
+
+    </div>
+  <mat-divider class="mat-divider" ></mat-divider>
+</div>
+
+<div class="container view-table" >
+    <div class="mat-elevation-z8">
+      
+<form [formGroup]="userTable"  >
+  <table  class="table " matSort (matSortChange)="sortData($event)" >
+    <thead class="text-nowrap">
+      <th mat-sort-header="SERVICE_NAME">Service Name </th>
+      <th>Pipe Class</th>
+      <th>Action</th>
+
+    </thead>
+    <tbody>
+      <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls | paginate:config ; let i=index ">
+        <tr *ngIf="group.get('isEditable').value" [formGroupName]="fieldGlobalIndex(i)">
+          <td>
+            <mat-form-field>
+              <input matInput type="text" formControlName="SERVICE_NAME">
+              <mat-error *ngIf="group.get('SERVICE_NAME').errors && formSubmitAttempt ">
+                You must provide a unique<br/><strong> Service Name</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+         <td>
+          <mat-form-field>
+            <mat-select [formControl]="toppings" #sel multiple>
+              <mat-option *ngFor="let topping of PipeData" [value]="topping._id"  (onSelectionChange)="SelectServices(group,$event,sel)" >{{topping.PIPE_NAME}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+         </td>
+            <td>
+              <div class="action-btns">
+
+                <button  mat-raised-button color="primary" class="push-right"
+                (click)="doneRow(group)">Save</button>
+              <button *ngIf="isDelete"  mat-raised-button color="accent" (click)="deleteRow(fieldGlobalIndex(i),group)" class="push-right">Delete</button>
+              <button   mat-raised-button color="accent" (click)="cancel(group)">Cancel</button>
+
+              </div>
+            </td>
+        </tr>
+        <tr *ngIf="!group.get('isEditable').value" >
+         
+          <td>
+            {{group.get('SERVICE_NAME').value}}
+          </td>
+         <td>
+          <span *ngFor="let pipes of group.value.PIPE"> <p >{{retrievePipe(pipes)}}</p> </span>
+
+         </td>
+          <td>
+            <div class="action-btns">
+              <button  mat-raised-button color="primary" class="push-right"
+              (click)="editRow(group)">Edit</button>    
+            </div>         
+           </td>
+        </tr>
+      </ng-container>
+    </tbody>
+    <div class="action-container">
+      <button mat-raised-button type="submit" color="primary" (click)="addRow()">Add row</button>
+    </div>
+    <div style="float:right">
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+</div>
+  </table>
+  
+</form>
+
+</div>
+
+</div>

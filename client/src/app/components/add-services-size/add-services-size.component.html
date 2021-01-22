@@ -1,0 +1,35 @@
+<!-- Title group  -->
+<div class="title-group">
+  <h1 class="mat-h1">Add Service Size</h1>
+  <mat-divider fxFlex="1 0"></mat-divider>
+</div>
+
+<!-- Form -->
+<div class="inner-wrapper">
+  <form [formGroup]="servicesSize" (ngSubmit)="submitServicesForm()" #resetServicesSizeForm="ngForm" novalidate>
+    <!-- Left block -->
+    <mat-card>
+      <div class="controlers-wrapper">
+        <!-- Name -->
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Size Value" formControlName="SIZE_VALUE">
+          <mat-error *ngIf="handleError('SIZE_VALUE', 'required')">
+            You must provide a<strong> size value</strong>
+          </mat-error>
+        </mat-form-field>
+
+        </div>
+        </mat-card>
+        
+      
+
+    <!-- Submit & Reset -->
+    <mat-card>
+      <div class="full-wrapper button-wrapper">
+        <div class="button-wrapper">
+          <button mat-flat-button color="warn">Submit</button>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+</div>
