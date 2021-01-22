@@ -707,7 +707,7 @@ var AuthenticationService = /** @class */ (function () {
         configurable: true
     });
     AuthenticationService.prototype.auth = function (email, password) {
-        return this.http.post(_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].APIEndpoint + "api/v1/auth/session", { email: email, password: password });
+        return this.http.post(_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].APIEndpoint + "/api/v1/auth/session", { email: email, password: password });
     };
     AuthenticationService.prototype.login = function (username, password) {
         var _this = this;
@@ -1739,7 +1739,7 @@ var CreatesubscriptionComponent = /** @class */ (function () {
         console.log(this.currentUser);
         var script = this._renderer2.createElement('script');
         script.type = "text/javascript";
-        script.text = "\n    Servicebot.init({\n      templateId : 1,\n      url : \"" + apiUrl + "\",\n      selector : document.getElementById('servicebot-request-form'),\n      handleResponse : (response) => {\n       if(response!=undefined){\n        function makeRequest (method, url, data) {\n          return new Promise(function (resolve, reject) {\n            var xhr = new XMLHttpRequest();\n            xhr.open(method, url);\n            xhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\n            xhr.onload = function () {\n              if (this.status >= 200 && this.status < 300) {\n                resolve(xhr.response);\n              } else {\n                reject({\n                  status: this.status,\n                  statusText: xhr.statusText\n                });\n              }\n            };\n            xhr.onerror = function () {\n              reject({\n                status: this.status,\n                statusText: xhr.statusText\n              });\n            };\n            if(method==\"POST\" && data){\n                xhr.send(JSON.stringify(data));\n            }else{\n                xhr.send();\n            }\n          });\n        }\n\n        var data=this.currentUser;\n        data=JSON.parse(localStorage.getItem('UserRegister'));\n        var envAPI=\"http://localhost:3000/\";\n        console.log(data);\n        makeRequest('POST', envAPI+\"api/v1/users/application/register\",data).then(function(data){\n                      var results=JSON.parse(data);\n                      alert(\"You have been successfully registered\");\n        });\n       }\n      },\n      type: \"request\",\n      spk: \"pk_test_51Hk5E2HRkt4pM4voJCzKPxwsFx4KQamuuLw5ouoI1POpvbSIhpoqRsgeDQMLZQwHGWCQsVeAqBxo3GddsskeK1WB00Aav17VXZ\",\n      forceCard : false, //set to true if you want credit card to be a required field for the customer\n      setPassword : false //set to true if you want customer to fill out a password\n  })  \n  \n  ";
+        script.text = "\n    Servicebot.init({\n      templateId : 1,\n      url : \"" + apiUrl + "\",\n      selector : document.getElementById('servicebot-request-form'),\n      handleResponse : (response) => {\n       if(response!=undefined){\n        function makeRequest (method, url, data) {\n          return new Promise(function (resolve, reject) {\n            var xhr = new XMLHttpRequest();\n            xhr.open(method, url);\n            xhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\n            xhr.onload = function () {\n              if (this.status >= 200 && this.status < 300) {\n                resolve(xhr.response);\n              } else {\n                reject({\n                  status: this.status,\n                  statusText: xhr.statusText\n                });\n              }\n            };\n            xhr.onerror = function () {\n              reject({\n                status: this.status,\n                statusText: xhr.statusText\n              });\n            };\n            if(method==\"POST\" && data){\n                xhr.send(JSON.stringify(data));\n            }else{\n                xhr.send();\n            }\n          });\n        }\n\n        var data=this.currentUser;\n        data=JSON.parse(localStorage.getItem('UserRegister'));\n        var envAPI=\"" + apiUrl + "\";\n        console.log(data);\n        makeRequest('POST', envAPI+\"/api/v1/users/application/register\",data).then(function(data){\n                      var results=JSON.parse(data);\n                      alert(\"You have been successfully registered\");\n        });\n       }\n      },\n      type: \"request\",\n      spk: \"pk_test_51Hk5E2HRkt4pM4voJCzKPxwsFx4KQamuuLw5ouoI1POpvbSIhpoqRsgeDQMLZQwHGWCQsVeAqBxo3GddsskeK1WB00Aav17VXZ\",\n      forceCard : false, //set to true if you want credit card to be a required field for the customer\n      setPassword : false //set to true if you want customer to fill out a password\n  })  \n  \n  ";
         console.log(script.text);
         this._renderer2.appendChild(this._document.body, script);
         this.existCondition = setInterval(function () {
@@ -13500,7 +13500,7 @@ __webpack_require__.r(__webpack_exports__);
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 var environment = {
-    APIEndpoint: 'http://localhost:3000',
+    APIEndpoint: 'https://servicesubscription.herokuapp.com',
     production: false
 };
 /*
@@ -13551,7 +13551,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\schematicGenerator\schematic_generator\client\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! D:\MySchematic\MySchematicGenerator\client\src\main.ts */"./src/main.ts");
 
 
 /***/ }),

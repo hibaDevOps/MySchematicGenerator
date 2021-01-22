@@ -23,7 +23,7 @@ export class AuthenticationService {
     }
     auth(email: string, password: string){
         
-        return this.http.post<any>(environment.APIEndpoint+`api/v1/auth/session`, { email,password})
+        return this.http.post<any>(environment.APIEndpoint+`/api/v1/auth/session`, { email,password})
             
             
     }

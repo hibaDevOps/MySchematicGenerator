@@ -89,9 +89,9 @@ export class CreatesubscriptionComponent implements OnInit {
 
         var data=this.currentUser;
         data=JSON.parse(localStorage.getItem('UserRegister'));
-        var envAPI="http://localhost:3000/";
+        var envAPI="${apiUrl}";
         console.log(data);
-        makeRequest('POST', envAPI+"api/v1/users/application/register",data).then(function(data){
+        makeRequest('POST', envAPI+"/api/v1/users/application/register",data).then(function(data){
                       var results=JSON.parse(data);
                       alert("You have been successfully registered");
         });

@@ -1,4 +1,4 @@
 export const environment = {
-  APIEndpoint: 'http://localhost:3000',
+  APIEndpoint: 'https://servicesubscription.herokuapp.com',
   production: true
 };
