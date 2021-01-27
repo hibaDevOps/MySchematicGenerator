@@ -59,6 +59,20 @@ export class ApiService {
       catchError(this.errorMgmt)
     )
   }
+  ResetPasswordForm(uid,token){
+    let url=environment.APIEndpoint+"/api/v1/auth/reset-password/"+uid+"/"+token;
+    return this.http.get(url)
+    .pipe(
+      catchError(this.errorMgmt)
+    )
+  }
+  SendNewPassword(uid,token,data){
+    let url=environment.APIEndpoint+"/api/v1/auth/reset-password/"+uid+"/"+token;
+    return this.http.post(url,data)
+    .pipe(
+      catchError(this.errorMgmt)
+    )
+  }
   
     StripeRegisterUser(data: any,url:any): Observable<any> {
       return this.http.post(url, data)

@@ -17,6 +17,8 @@ export class ChangePasswordComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
+  uid:any;
+  token:any;
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -27,8 +29,23 @@ export class ChangePasswordComponent implements OnInit {
     private loader: Ng4LoadingSpinnerService,
     private ms: MessageService) { }
 
-  ngOnInit() {  this.loginForm = this.formBuilder.group({
-    currentPassword: ['', Validators.required],
+  ngOnInit() {  
+    
+    this.uid=this.route.snapshot.paramMap.get('uid');
+    this.token=this.route.snapshot.paramMap.get('token');
+    this.commonService.ResetPasswordForm(this.uid,this.token)
+    .pipe(first())
+    .subscribe(
+        data => {
+          console.log(data);
+
+        },error=>{
+           console.log(error);
+        })
+
+
+    
+    this.loginForm = this.formBuilder.group({
     newPassword:['', Validators.required]
 });
 
@@ -45,22 +62,24 @@ onSubmit(){
 
       this.loading = true;
       this.loader.show();
-      var url='change-password';
-      var email=localStorage.getItem('resetPasswordUser');
-      var currentPassword=this.f.currentPassword.value;
+      
       var newPassword=this.f.newPassword.value;
+      this.uid=this.route.snapshot.paramMap.get('uid');
+      this.token=this.route.snapshot.paramMap.get('token');
 
 
-      this.commonService.Add({email,currentPassword,newPassword}, url)
+      this.commonService.SendNewPassword(this.uid,this.token,{password:newPassword})
           .pipe(first())
           .subscribe(
               data => {
-                  //this.router.navigate([this.returnUrl]);
                       console.log(data);
                       this.loader.hide();
                       this.loading = false;
                       localStorage.removeItem("resetPasswordUser");
                       this.ms.openSnackBar("Password has been successfully changed");
+                      this.ngZone.run(() => this.router.navigateByUrl('/login'))
+
+
 
                   
 

@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/shared/api.service';
 import { MessageService } from 'src/app/shared/messageService';
 import { AlertService } from 'src/app/_services/alert.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-forgot-password',
@@ -47,9 +48,8 @@ export class ForgotPasswordComponent implements OnInit {
 
         this.loading = true;
         this.loader.show();
-        var email=this.f.emailAddress.value;
-        var url='email/send-password';
-        this.commonService.Add({email}, url)
+        var emailAdd=this.f.emailAddress.value;
+        this.commonService.ResetPasswordRequest({email:emailAdd})
             .pipe(first())
             .subscribe(
                 data => {

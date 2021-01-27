@@ -40,13 +40,12 @@ SD_EMAIL.route('/email/send-password').post((req, res, next) => {
         } else {
           console.log("3");
            mailOptions.to=res.body.email;
-          res.json(data);
+          return res.send(data);
         }
       });
-
+       return res.send(user);
     }
 });
-res.send("Email sent");
 });
 
 

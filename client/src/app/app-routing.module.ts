@@ -95,7 +95,7 @@ const routes: Routes = [
   { path: 'project-service-data/getAll/:id', component: ProjectServiceDataComponent}, 
   { path: 'upload_templates', component: UploadTemplatesComponent}, 
   {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'change-password', component: ChangePasswordComponent},
+  {path: 'reset-password/:uid/:token', component: ChangePasswordComponent},
   {path: 'invite-user', component: InviteUsersComponent}
 
 

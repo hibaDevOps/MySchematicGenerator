@@ -73,7 +73,7 @@ module.exports = "\r\n    <div id=\"servicebot-management-form\"></div>\r\n    <
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2>Change Password</h2>\r\n<form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\r\n    <div class=\"form-group\">\r\n        <label for=\"currentPassword\">Current Password</label>\r\n        <input type=\"password\" formControlName=\"currentPassword\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && f.currentPassword.errors }\" />\r\n        <div *ngIf=\"submitted && f.currentPassword.errors\" class=\"invalid-feedback\">\r\n            <div *ngIf=\"f.currentPassword.errors.required\">Current Password is required</div>\r\n        </div>\r\n    </div>\r\n     <div class=\"form-group\">\r\n        <label for=\"newPassword\">New Password</label>\r\n        <input type=\"password\" formControlName=\"newPassword\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && f.newPassword.errors }\" />\r\n        <div *ngIf=\"submitted && f.newPassword.errors\" class=\"invalid-feedback\">\r\n            <div *ngIf=\"f.newPassword.errors.required\">New Password is required</div>\r\n        </div>\r\n    </div>\r\n   \r\n    <div class=\"form-group\">\r\n        <button [disabled]=\"loading\" class=\"btn btn-primary\">\r\n            <span *ngIf=\"loading\" class=\"spinner-border spinner-border-sm mr-1\"></span>\r\n            Submit\r\n        </button>\r\n\r\n    </div>\r\n</form>"
+module.exports = "<h2>Change Password</h2>\r\n<form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\r\n   \r\n     <div class=\"form-group\">\r\n        <label for=\"newPassword\">New Password</label>\r\n        <input type=\"password\" formControlName=\"newPassword\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && f.newPassword.errors }\" />\r\n        <div *ngIf=\"submitted && f.newPassword.errors\" class=\"invalid-feedback\">\r\n            <div *ngIf=\"f.newPassword.errors.required\">New Password is required</div>\r\n        </div>\r\n    </div>\r\n   \r\n    <div class=\"form-group\">\r\n        <button [disabled]=\"loading\" class=\"btn btn-primary\">\r\n            <span *ngIf=\"loading\" class=\"spinner-border spinner-border-sm mr-1\"></span>\r\n            Submit\r\n        </button>\r\n\r\n    </div>\r\n</form>"
 
 /***/ }),
 
@@ -910,7 +910,7 @@ var routes = [
     { path: 'project-service-data/getAll/:id', component: _components_project_service_data_project_service_data_component__WEBPACK_IMPORTED_MODULE_43__["ProjectServiceDataComponent"] },
     { path: 'upload_templates', component: _components_upload_templates_upload_templates_upload_templates_component__WEBPACK_IMPORTED_MODULE_44__["UploadTemplatesComponent"] },
     { path: 'forgot-password', component: _components_forgot_password_forgot_password_component__WEBPACK_IMPORTED_MODULE_45__["ForgotPasswordComponent"] },
-    { path: 'change-password', component: _components_change_password_change_password_component__WEBPACK_IMPORTED_MODULE_46__["ChangePasswordComponent"] },
+    { path: 'reset-password/:uid/:token', component: _components_change_password_change_password_component__WEBPACK_IMPORTED_MODULE_46__["ChangePasswordComponent"] },
     { path: 'invite-user', component: _components_invite_users_invite_users_component__WEBPACK_IMPORTED_MODULE_47__["InviteUsersComponent"] }
 ];
 var AppRoutingModule = /** @class */ (function () {
@@ -1981,8 +1981,16 @@ var ChangePasswordComponent = /** @class */ (function () {
         this.submitted = false;
     }
     ChangePasswordComponent.prototype.ngOnInit = function () {
+        this.uid = this.route.snapshot.paramMap.get('uid');
+        this.token = this.route.snapshot.paramMap.get('token');
+        this.commonService.ResetPasswordForm(this.uid, this.token)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])())
+            .subscribe(function (data) {
+            console.log(data);
+        }, function (error) {
+            console.log(error);
+        });
         this.loginForm = this.formBuilder.group({
-            currentPassword: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             newPassword: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
         });
     };
@@ -2000,19 +2008,18 @@ var ChangePasswordComponent = /** @class */ (function () {
         }
         this.loading = true;
         this.loader.show();
-        var url = 'change-password';
-        var email = localStorage.getItem('resetPasswordUser');
-        var currentPassword = this.f.currentPassword.value;
         var newPassword = this.f.newPassword.value;
-        this.commonService.Add({ email: email, currentPassword: currentPassword, newPassword: newPassword }, url)
+        this.uid = this.route.snapshot.paramMap.get('uid');
+        this.token = this.route.snapshot.paramMap.get('token');
+        this.commonService.SendNewPassword(this.uid, this.token, { password: newPassword })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])())
             .subscribe(function (data) {
-            //this.router.navigate([this.returnUrl]);
             console.log(data);
             _this.loader.hide();
             _this.loading = false;
             localStorage.removeItem("resetPasswordUser");
             _this.ms.openSnackBar("Password has been successfully changed");
+            _this.ngZone.run(function () { return _this.router.navigateByUrl('/login'); });
         }, function (error) {
             _this.ms.openSnackBar("Error! please try again later");
             _this.alertService.error(error);
@@ -2608,9 +2615,8 @@ var ForgotPasswordComponent = /** @class */ (function () {
         }
         this.loading = true;
         this.loader.show();
-        var email = this.f.emailAddress.value;
-        var url = 'email/send-password';
-        this.commonService.Add({ email: email }, url)
+        var emailAdd = this.f.emailAddress.value;
+        this.commonService.ResetPasswordRequest({ email: emailAdd })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])())
             .subscribe(function (data) {
             //this.router.navigate([this.returnUrl]);
@@ -13335,6 +13341,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
+
 
 
 
@@ -13376,6 +13384,16 @@ var ApiService = /** @class */ (function () {
     ApiService.prototype.ResetPasswordRequest = function (email) {
         var url = "https://servicesubscription.herokuapp.com/api/v1/auth/reset-password";
         return this.http.post(url, email)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.errorMgmt));
+    };
+    ApiService.prototype.ResetPasswordForm = function (uid, token) {
+        var url = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].APIEndpoint + "/api/v1/auth/reset-password/" + uid + "/" + token;
+        return this.http.get(url)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.errorMgmt));
+    };
+    ApiService.prototype.SendNewPassword = function (uid, token, data) {
+        var url = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].APIEndpoint + "/api/v1/auth/reset-password/" + uid + "/" + token;
+        return this.http.post(url, data)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.errorMgmt));
     };
     ApiService.prototype.StripeRegisterUser = function (data, url) {
@@ -13509,7 +13527,7 @@ __webpack_require__.r(__webpack_exports__);
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 var environment = {
-    APIEndpoint: 'https://servicesubscription.herokuapp.com',
+    APIEndpoint: 'http://localhost:3000',
     production: false
 };
 /*
