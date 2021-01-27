@@ -2,6 +2,8 @@ import { ApiService } from '../../../shared/api.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageService } from "../../../shared/messageService";
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 import { FormBuilder, FormGroup, FormArray, Validators, Form, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Renderer2,Component, OnInit, ViewChild, NgZone, ElementRef, Inject } from '@angular/core';
@@ -36,7 +38,8 @@ export class CreatesubscriptionComponent implements OnInit {
     }
   };*/
   constructor(private commonSevice: ApiService, private _renderer2: Renderer2, 
-    @Inject(DOCUMENT) private _document: Document,private dialog: MatDialog,private router: Router,private auth:AuthenticationService,private ms:MessageService) { 
+    @Inject(DOCUMENT) private _document: Document,private dialog: MatDialog,private router: Router,private auth:AuthenticationService,private ms:MessageService,    private loader: Ng4LoadingSpinnerService,
+    ) { 
       
       this.loadScripts();
     }
@@ -105,17 +108,16 @@ export class CreatesubscriptionComponent implements OnInit {
   
   `;
   console.log(script.text);
-
   this._renderer2.appendChild(this._document.body, script);
   this.existCondition = setInterval(function() {
     if ($('#servicebot-request-form').html()!='') {
        if($('#servicebot-request-form .App span').html()!=''){
-        $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('blur');
+        $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
         $( "input[type=text]" ).focus(function() {
-          $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('blur');
+          $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
         });
         $("form").submit(function( event ) {
-
+/*
           if(!$('input[type=text]').val() || $('input[type=text]').val()=='' || $('input[type=text]').val()==undefined){
             $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('blur');
 
@@ -127,7 +129,7 @@ export class CreatesubscriptionComponent implements OnInit {
            }
            $("input[type=text]").attr("value", (localStorage.getItem('registerUser')));
            $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
-
+*/
            
           });
 

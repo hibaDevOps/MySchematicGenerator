@@ -51,6 +51,14 @@ export class ApiService {
       catchError(this.errorMgmt)
     )
   }
+  ResetPasswordRequest(email:any){
+    
+    let url="https://servicesubscription.herokuapp.com/api/v1/auth/reset-password";
+    return this.http.post(url, email)
+    .pipe(
+      catchError(this.errorMgmt)
+    )
+  }
   
     StripeRegisterUser(data: any,url:any): Observable<any> {
       return this.http.post(url, data)

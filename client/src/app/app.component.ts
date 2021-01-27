@@ -40,12 +40,7 @@ export class AppComponent {
 
   ngOnInit() {
     
-    this.apiService.GetServiceBotUsers().pipe(first()).subscribe(
-        data => {
-          console.log(data);
-        },error =>{
-
-        });
+   
     this.currentUser = this.auth.currentUserValue;
     if(this.currentUser){
       if(this.currentUser.isAdmin == "1"){

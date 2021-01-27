@@ -6,10 +6,11 @@ const SD_EMAIL = express.Router();
 var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host:'smtp.flockmail.com',
+  port:587,
   auth: {
-    user: '2dSchemtaics@gmail.com',
-    pass: '2dscheme01'
+    user: 'bmartyn@acmesoftware.net',
+    pass: 'Reset123!'
   }
 });
 
@@ -28,16 +29,14 @@ SD_EMAIL.route('/email/send-password').post((req, res, next) => {
       return next(err);
     }else{
       var mailOptions = {
-        from: '2dSchemtaics@gmail.com',
+        from: 'bmartyn@acmesoftware.net',
         to: req.body.email,
         subject: 'Reset Email',
         text: 'Your password has been reset. New password is AeiOu98094_#234'
       };
       transporter.sendMail(mailOptions, (error, data) => {
         if (error) {
-          console.log("2");
-
-          res.next(error);
+          return console.log(error);
         } else {
           console.log("3");
            mailOptions.to=res.body.email;

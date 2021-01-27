@@ -958,8 +958,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_billing_createsubscription_createsubscription_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/billing/createsubscription/createsubscription.component */ "./src/app/components/billing/createsubscription/createsubscription.component.ts");
 /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_services/authentication.service */ "./src/app/_services/authentication.service.ts");
 /* harmony import */ var _shared_api_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./shared/api.service */ "./src/app/shared/api.service.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-
 
 
 
@@ -988,10 +986,6 @@ var AppComponent = /** @class */ (function () {
         });
     };
     AppComponent.prototype.ngOnInit = function () {
-        this.apiService.GetServiceBotUsers().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["first"])()).subscribe(function (data) {
-            console.log(data);
-        }, function (error) {
-        });
         this.currentUser = this.auth.currentUserValue;
         if (this.currentUser) {
             if (this.currentUser.isAdmin == "1") {
@@ -1694,13 +1688,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _shared_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../shared/api.service */ "./src/app/shared/api.service.ts");
 /* harmony import */ var _shared_messageService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../shared/messageService */ "./src/app/shared/messageService.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
-/* harmony import */ var _manage_manage_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../manage/manage.component */ "./src/app/components/billing/manage/manage.component.ts");
-/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../_services/authentication.service */ "./src/app/_services/authentication.service.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var ng4_loading_spinner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ng4-loading-spinner */ "./node_modules/ng4-loading-spinner/ng4-loading-spinner.umd.js");
+/* harmony import */ var ng4_loading_spinner__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ng4_loading_spinner__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
+/* harmony import */ var _manage_manage_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../manage/manage.component */ "./src/app/components/billing/manage/manage.component.ts");
+/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../_services/authentication.service */ "./src/app/_services/authentication.service.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../environments/environment */ "./src/environments/environment.ts");
+
 
 
 
@@ -1722,7 +1719,7 @@ var CreatesubscriptionComponent = /** @class */ (function () {
         }
       }
     };*/
-    function CreatesubscriptionComponent(commonSevice, _renderer2, _document, dialog, router, auth, ms) {
+    function CreatesubscriptionComponent(commonSevice, _renderer2, _document, dialog, router, auth, ms, loader) {
         this.commonSevice = commonSevice;
         this._renderer2 = _renderer2;
         this._document = _document;
@@ -1730,11 +1727,12 @@ var CreatesubscriptionComponent = /** @class */ (function () {
         this.router = router;
         this.auth = auth;
         this.ms = ms;
+        this.loader = loader;
         this.loadScripts();
     }
     CreatesubscriptionComponent.prototype.ngOnInit = function () {
         var user = localStorage.getItem('UserRegister');
-        var apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_9__["environment"].APIEndpoint;
+        var apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].APIEndpoint;
         this.currentUser = JSON.parse(user);
         console.log(this.currentUser);
         var script = this._renderer2.createElement('script');
@@ -1745,19 +1743,24 @@ var CreatesubscriptionComponent = /** @class */ (function () {
         this.existCondition = setInterval(function () {
             if ($('#servicebot-request-form').html() != '') {
                 if ($('#servicebot-request-form .App span').html() != '') {
-                    $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('blur');
+                    $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
                     $("input[type=text]").focus(function () {
-                        $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('blur');
+                        $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
                     });
                     $("form").submit(function (event) {
-                        if (!$('input[type=text]').val() || $('input[type=text]').val() == '' || $('input[type=text]').val() == undefined) {
-                            $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('blur');
-                        }
-                        if ($('input[type=text]').attr('value') == '' || $('input[type=text]').attr('value') == undefined) {
-                            $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('blur');
-                        }
-                        $("input[type=text]").attr("value", (localStorage.getItem('registerUser')));
-                        $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
+                        /*
+                                  if(!$('input[type=text]').val() || $('input[type=text]').val()=='' || $('input[type=text]').val()==undefined){
+                                    $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('blur');
+                        
+                                  }
+                                   if($('input[type=text]').attr('value')=='' || $('input[type=text]').attr('value')==undefined)
+                                   {
+                                    $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('blur');
+                                    
+                                   }
+                                   $("input[type=text]").attr("value", (localStorage.getItem('registerUser')));
+                                   $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
+                        */
                     });
                 }
             }
@@ -1767,7 +1770,7 @@ var CreatesubscriptionComponent = /** @class */ (function () {
         this.dialog.closeAll();
     };
     CreatesubscriptionComponent.prototype.manage = function () {
-        var dialogRef = this.dialog.open(_manage_manage_component__WEBPACK_IMPORTED_MODULE_7__["ManageComponent"], {
+        var dialogRef = this.dialog.open(_manage_manage_component__WEBPACK_IMPORTED_MODULE_8__["ManageComponent"], {
             height: '600px',
             width: '700px'
         });
@@ -1798,22 +1801,23 @@ var CreatesubscriptionComponent = /** @class */ (function () {
     };
     CreatesubscriptionComponent.ctorParameters = function () { return [
         { type: _shared_api_service__WEBPACK_IMPORTED_MODULE_1__["ApiService"] },
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Renderer2"] },
-        { type: Document, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Inject"], args: [_angular_common__WEBPACK_IMPORTED_MODULE_5__["DOCUMENT"],] }] },
-        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_6__["MatDialog"] },
-        { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
-        { type: _services_authentication_service__WEBPACK_IMPORTED_MODULE_8__["AuthenticationService"] },
-        { type: _shared_messageService__WEBPACK_IMPORTED_MODULE_2__["MessageService"] }
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Renderer2"] },
+        { type: Document, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Inject"], args: [_angular_common__WEBPACK_IMPORTED_MODULE_6__["DOCUMENT"],] }] },
+        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__["MatDialog"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] },
+        { type: _services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"] },
+        { type: _shared_messageService__WEBPACK_IMPORTED_MODULE_2__["MessageService"] },
+        { type: ng4_loading_spinner__WEBPACK_IMPORTED_MODULE_3__["Ng4LoadingSpinnerService"] }
     ]; };
     CreatesubscriptionComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["Component"])({
             selector: 'app-createsubscription',
             template: __webpack_require__(/*! raw-loader!./createsubscription.component.html */ "./node_modules/raw-loader/index.js!./src/app/components/billing/createsubscription/createsubscription.component.html"),
             styles: [__webpack_require__(/*! ./createsubscription.component.css */ "./src/app/components/billing/createsubscription/createsubscription.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_5__["DOCUMENT"])),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_shared_api_service__WEBPACK_IMPORTED_MODULE_1__["ApiService"], _angular_core__WEBPACK_IMPORTED_MODULE_4__["Renderer2"],
-            Document, _angular_material_dialog__WEBPACK_IMPORTED_MODULE_6__["MatDialog"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_8__["AuthenticationService"], _shared_messageService__WEBPACK_IMPORTED_MODULE_2__["MessageService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_6__["DOCUMENT"])),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_shared_api_service__WEBPACK_IMPORTED_MODULE_1__["ApiService"], _angular_core__WEBPACK_IMPORTED_MODULE_5__["Renderer2"],
+            Document, _angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__["MatDialog"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"], _shared_messageService__WEBPACK_IMPORTED_MODULE_2__["MessageService"], ng4_loading_spinner__WEBPACK_IMPORTED_MODULE_3__["Ng4LoadingSpinnerService"]])
     ], CreatesubscriptionComponent);
     return CreatesubscriptionComponent;
 }());
@@ -13366,6 +13370,11 @@ var ApiService = /** @class */ (function () {
     };
     ApiService.prototype.InviteUsers = function (email) {
         var url = "https://servicesubscription.herokuapp.com/api/v1/users/invite";
+        return this.http.post(url, email)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.errorMgmt));
+    };
+    ApiService.prototype.ResetPasswordRequest = function (email) {
+        var url = "https://servicesubscription.herokuapp.com/api/v1/auth/reset-password";
         return this.http.post(url, email)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.errorMgmt));
     };
