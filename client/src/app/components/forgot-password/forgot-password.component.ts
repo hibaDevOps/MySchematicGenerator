@@ -49,8 +49,7 @@ export class ForgotPasswordComponent implements OnInit {
         this.loading = true;
         this.loader.show();
         var emailAdd=this.f.emailAddress.value;
-        var url="email/send-password";
-        this.commonService.Add({email:emailAdd},url)
+        this.commonService.ResetPasswordRequest({email:emailAdd})
             .pipe(first())
             .subscribe(
                 data => {
