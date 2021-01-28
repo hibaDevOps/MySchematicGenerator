@@ -2616,7 +2616,8 @@ var ForgotPasswordComponent = /** @class */ (function () {
         this.loading = true;
         this.loader.show();
         var emailAdd = this.f.emailAddress.value;
-        this.commonService.ResetPasswordRequest({ email: emailAdd })
+        var url = "email/send-password";
+        this.commonService.Add({ email: emailAdd }, url)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])())
             .subscribe(function (data) {
             //this.router.navigate([this.returnUrl]);
