@@ -42,10 +42,10 @@ export class ApiService {
       )
   }
   GetServiceBotUsers(){
-    return this.http.get(`https://servicesubscription.herokuapp.com/api/v1/users`);
+    return this.http.get(environment.APIEndpoint+`/api/v1/users`);
   }
   InviteUsers(email:any){
-    let url="https://servicesubscription.herokuapp.com/api/v1/users/invite";
+    let url=environment.APIEndpoint+"/api/v1/users/invite";
     return this.http.post(url, email)
     .pipe(
       catchError(this.errorMgmt)
@@ -53,7 +53,7 @@ export class ApiService {
   }
   ResetPasswordRequest(email:any){
     
-    let url="https://servicesubscription.herokuapp.com/api/v1/auth/reset-password";
+    let url=environment.APIEndpoint+"/api/v1/auth/reset-password";
     return this.http.post(url, email)
     .pipe(
       catchError(this.errorMgmt)
