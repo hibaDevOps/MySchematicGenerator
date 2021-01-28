@@ -13528,6 +13528,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 var environment = {
     APIEndpoint: 'https://servicesubscription.herokuapp.com',
+    Application_url: 'https://quicktul-services.herokuapp.com',
     production: false
 };
 /*
