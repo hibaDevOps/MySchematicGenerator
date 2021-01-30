@@ -1900,7 +1900,7 @@ export class GeneratePdfComponent implements OnInit {
 
   }
 
-  CreatePDFPage(pdfDoc, pageType) {
+  CreatePDFPage(pdfDoc, pageType, pageName) {
     // Add a blank page to the document
 
     var page: PDFPage;
@@ -1936,11 +1936,11 @@ export class GeneratePdfComponent implements OnInit {
       borderOpacity: 0.75,
     });
 
-    this.insertTitleBlock(page, pageType);
+    this.insertTitleBlock(page, pageType,pageName);
     return page;
   }
 
-  insertTitleBlock(page, pageType) {
+  insertTitleBlock(page, pageType, pageName) {
 
     var firstsection = 20;
     var secondsection = 120;
@@ -1981,6 +1981,15 @@ export class GeneratePdfComponent implements OnInit {
     var desca = title[0].DESCRIPTION_A;
     var descb = title[0].DESCRIPTION_B;
     var descc = title[0].DESCRIPTION_C;
+
+    console.log('title :', title);
+    console.log('pageName :', pageName);
+    var subtitle = title.filter(x => x.DESCRIPTION_A.toUpperCase().indexOf(pageName.toUpperCase()) > -1);
+    if(subtitle.length > 0){
+     desca = subtitle[0].DESCRIPTION_A;
+     descb = subtitle[0].DESCRIPTION_B;
+     descc = subtitle[0].DESCRIPTION_C;
+    }
 
 
 
@@ -2095,7 +2104,7 @@ export class GeneratePdfComponent implements OnInit {
     console.log('added data table');
 
     //add blank page - for image
-    var page = this.CreatePDFPage(pdfDoc, "MECHANICAL");
+    var page = this.CreatePDFPage(pdfDoc, "MECHANICAL","DRAWING");
     this.AddImagetoPDF(pdfDoc, page, imgType, uriData.mechURI);
     console.log('image inserted');
 
@@ -2108,7 +2117,7 @@ export class GeneratePdfComponent implements OnInit {
     this.insertInputData(pdfDoc, "RACEWAY");
     console.log('added data table');
 
-    var page = this.CreatePDFPage(pdfDoc, "ELECTRICAL");
+    var page = this.CreatePDFPage(pdfDoc, "ELECTRICAL", "DRAWING");
     this.AddImagetoPDF(pdfDoc, page, imgType, uriData.electricalURI);
     console.log('image inserted');
 
@@ -2131,7 +2140,7 @@ export class GeneratePdfComponent implements OnInit {
     var notes = this.projNotes.filter(x => x.NOTE_CATEGORY == section);
 
     if (notes.length > 0) {
-      page = this.CreatePDFPage(pdfDoc, section.toUpperCase());
+      page = this.CreatePDFPage(pdfDoc, section.toUpperCase(),"NOTES");
       var topPos = page.getHeight() - 40;
 
       for (var i = 0; i < notes.length; i++) {
@@ -2228,7 +2237,7 @@ export class GeneratePdfComponent implements OnInit {
 
     // var table = document.getElementById("inputtatble");
     var pageblock = section == "MECHANICAL" ? "MECHANICAL" : "ELECTRICAL";
-    var page = this.CreatePDFPage(pdfDoc, pageblock);
+    var page = this.CreatePDFPage(pdfDoc, pageblock, "SCHEDULE");
     var rowCount = 0;
     var rowHeight = 30;
     var rowY = 0;
@@ -2307,7 +2316,7 @@ export class GeneratePdfComponent implements OnInit {
       // if ((rowHeight * (pageRow + 2)) >= drawingHeight) {
       //   console.log('rowY , rowHeight , drawingHeight, rowY + rowHeight : ', rowY , rowHeight , drawingHeight, rowY + rowHeight)
       if (rowY  - padding <= drawingHeight) {
-        page = this.CreatePDFPage(this.pdfDoc, pageblock); //got to next page
+        page = this.CreatePDFPage(this.pdfDoc, pageblock, "SCHEDULE"); //got to next page
         startPosY = page.getHeight() - 70;
         pageRow = 1;
 
@@ -2360,7 +2369,7 @@ export class GeneratePdfComponent implements OnInit {
 
   insertRegisterSheet() {
 
-    var page = this.CreatePDFPage(this.pdfDoc, "GENERAL"); //got to next page
+    var page = this.CreatePDFPage(this.pdfDoc, "GENERAL","COVER PAGE"); //got to next page
 
     // var table = document.getElementById("inputtatble");
     var rowCount = 0;
@@ -2389,7 +2398,7 @@ export class GeneratePdfComponent implements OnInit {
 
       drawingHeight = page.getHeight() - padding - this.blockTotalHeight;
       if ((rowHeight * (pageRow + 2)) >= drawingHeight) {
-        page = this.CreatePDFPage(this.pdfDoc, "GENERAL"); //got to next page
+        page = this.CreatePDFPage(this.pdfDoc, "GENERAL", "COVER PAGE"); //got to next page
         startPosY = page.getHeight() - 70;
         pageRow = 1;
 
@@ -2426,7 +2435,7 @@ export class GeneratePdfComponent implements OnInit {
 
   async insertEquipmentSheet(section, eqpImgBuffer, actualsection) {
 
-    var page = this.CreatePDFPage(this.pdfDoc, section);
+    var page = this.CreatePDFPage(this.pdfDoc, section, "EQUIPMENT");
     var firstPage = page;
     var headings = [], colheads = [];
     var main_data_table = [];
@@ -2462,7 +2471,7 @@ export class GeneratePdfComponent implements OnInit {
 
       drawingHeight = page.getHeight() - padding - this.blockTotalHeight;
       if ((rowHeight * (pageRow + 2)) >= drawingHeight) {
-        page = this.CreatePDFPage(this.pdfDoc, section); //got to next page
+        page = this.CreatePDFPage(this.pdfDoc, section,  "EQUIPMENT"); //got to next page
         startPosY = page.getHeight() - 70;
         pageRow = 1;
 

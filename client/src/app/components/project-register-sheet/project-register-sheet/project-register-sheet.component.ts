@@ -41,6 +41,7 @@ export class ProjectRegisterSheetComponent implements OnInit {
   isDelete:boolean;
   resetFormGroup:any
   projectName:any;
+  pageNames: any=[];
   alphaList=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
   constructor(    private router: Router,
@@ -55,6 +56,14 @@ export class ProjectRegisterSheetComponent implements OnInit {
       currentPage: 1,
       totalItems: 0
     }
+
+    this.pageNames = [];
+    this.pageNames.push("Cover Page");
+    this.pageNames.push("Mechanical Equipment");
+    this.pageNames.push("Electrical Equipment");
+    this.pageNames.push("Notes");
+    this.pageNames.push("Schedule");
+    this.pageNames.push("Diagram");
     
     this.formSubmitAttempt=false;
     this.touchedRows = [];

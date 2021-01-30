@@ -75,7 +75,12 @@
             </td>
             <td>
               <mat-form-field>
-                <input matInput type="text" formControlName="DESCRIPTION_A">
+                <mat-select  formControlName="DESCRIPTION_A">
+                  <mat-option *ngFor="let page of pageNames" [value]="page">
+                    {{page}}
+                  </mat-option>
+                </mat-select>
+                <!-- <input matInput type="text" formControlName="DESCRIPTION_A"> -->
                 <mat-error *ngIf="group.get('DESCRIPTION_A').errors && formSubmitAttempt ">
                   You must provide a<strong> Description</strong>
                 </mat-error>
