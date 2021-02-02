@@ -115,9 +115,8 @@ export class CreatesubscriptionComponent implements OnInit {
     if ($('#servicebot-request-form').html()!='') {
        if($('#servicebot-request-form .App span').html()!=''){
         $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
-        $( "input[type=text]" ).focus(function() {
-          $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
-        });
+        clearInterval(this.existCondition);
+        
         $("form").submit(function( event ) {
 /*
           if(!$('input[type=text]').val() || $('input[type=text]').val()=='' || $('input[type=text]').val()==undefined){

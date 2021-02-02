@@ -46,7 +46,9 @@ export class ManageComponent implements OnInit {
         type : "manage",
         token: `+`"`+this.token+`"`+`,
         handleResponse: (response) => {
-		      
+          if(response.event == 'cancellation'){
+            window.location.href = "/?isCancelled=true";
+          }
         }
     })
  

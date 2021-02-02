@@ -967,8 +967,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent(router, dialog, auth, ngZone, apiService) {
+    function AppComponent(router, actRoute, dialog, auth, ngZone, apiService) {
         this.router = router;
+        this.actRoute = actRoute;
         this.dialog = dialog;
         this.auth = auth;
         this.ngZone = ngZone;
@@ -986,6 +987,12 @@ var AppComponent = /** @class */ (function () {
         });
     };
     AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.actRoute.queryParams.subscribe(function (params) {
+            if (params.isCancelled) {
+                _this.logout();
+            }
+        });
         this.isLogged = false;
         this.currentUser = this.auth.currentUserValue;
         if (this.currentUser) {
@@ -1059,6 +1066,7 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.ctorParameters = function () { return [
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] },
         { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialog"] },
         { type: _services_authentication_service__WEBPACK_IMPORTED_MODULE_6__["AuthenticationService"] },
         { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] },
@@ -1080,7 +1088,7 @@ var AppComponent = /** @class */ (function () {
             template: __webpack_require__(/*! raw-loader!./app.component.html */ "./node_modules/raw-loader/index.js!./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialog"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_6__["AuthenticationService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"], _shared_api_service__WEBPACK_IMPORTED_MODULE_7__["ApiService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialog"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_6__["AuthenticationService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"], _shared_api_service__WEBPACK_IMPORTED_MODULE_7__["ApiService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -1746,9 +1754,7 @@ var CreatesubscriptionComponent = /** @class */ (function () {
             if ($('#servicebot-request-form').html() != '') {
                 if ($('#servicebot-request-form .App span').html() != '') {
                     $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
-                    $("input[type=text]").focus(function () {
-                        $('input[type=text]').val((localStorage.getItem('registerUser'))).trigger('focus');
-                    });
+                    clearInterval(this.existCondition);
                     $("form").submit(function (event) {
                         /*
                                   if(!$('input[type=text]').val() || $('input[type=text]').val()=='' || $('input[type=text]').val()==undefined){
@@ -1896,7 +1902,7 @@ var ManageComponent = /** @class */ (function () {
                 console.log(_this.token);
                 var script = _this._renderer2.createElement('script');
                 script.type = "text/javascript";
-                script.text = "\n      Servicebot.init({\n        url : " + "\"" + _environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].APIEndpoint + "\"" + ",\n        selector : document.getElementById('servicebot-management-form'),\n        type : \"manage\",\n        token: " + "\"" + _this.token + "\"" + ",\n        handleResponse: (response) => {\n\t\t      \n        }\n    })\n \n        ";
+                script.text = "\n      Servicebot.init({\n        url : " + "\"" + _environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].APIEndpoint + "\"" + ",\n        selector : document.getElementById('servicebot-management-form'),\n        type : \"manage\",\n        token: " + "\"" + _this.token + "\"" + ",\n        handleResponse: (response) => {\n          if(response.event == 'cancellation'){\n            window.location.href = \"/?isCancelled=true\";\n          }\n        }\n    })\n \n        ";
                 _this._renderer2.appendChild(_this._document.body, script);
             });
         }
@@ -2908,7 +2914,7 @@ var LoginComponent = /** @class */ (function () {
         this.ms = ms;
         this.loading = false;
         this.submitted = false;
-        // redirect to home if already logged in
+        //redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/']);
         }

@@ -30,16 +30,15 @@ export class LoginComponent implements OnInit {
         private loader: Ng4LoadingSpinnerService,
         private ms: MessageService
     ) {
-        // redirect to home if already logged in
+        //redirect to home if already logged in
         if (this.authenticationService.currentUserValue) { 
             this.router.navigate(['/']);
         }
     }
 
     ngOnInit() {
-
         
-
+        
         this.loginForm = this.formBuilder.group({
             email: ['', Validators.required],
             password: ['', Validators.required]

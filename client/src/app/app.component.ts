@@ -24,7 +24,7 @@ export class AppComponent {
   isAdmin:boolean;
 
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
-  constructor(private router: Router, public dialog: MatDialog, public auth:AuthenticationService , public ngZone:NgZone, public apiService:ApiService) {
+  constructor(private router: Router, private actRoute:ActivatedRoute, public dialog: MatDialog, public auth:AuthenticationService , public ngZone:NgZone, public apiService:ApiService) {
     
   }
   openDialog() {
@@ -39,6 +39,12 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.actRoute.queryParams.subscribe(params => {
+      if(params.isCancelled){
+        this.logout();
+      }
+    });
+
     this.isLogged=false;
     this.currentUser = this.auth.currentUserValue;
     if(this.currentUser){
