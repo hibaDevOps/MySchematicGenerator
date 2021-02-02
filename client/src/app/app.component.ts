@@ -39,8 +39,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    
-   
+    this.isLogged=false;
     this.currentUser = this.auth.currentUserValue;
     if(this.currentUser){
       if(this.currentUser.isAdmin == "1"){

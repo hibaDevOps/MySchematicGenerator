@@ -51,7 +51,7 @@ module.exports = "<!-- Title group  -->\r\n<div class=\"title-group\">\r\n  <div
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-dialog-content>\r\n<div id=\"servicebot-request-form\"></div>\r\n</mat-dialog-content>\r\n<mat-dialog-actions align=\"end\">\r\n    <button class=\"matBtn\" mat-button cdkFocusInitial (click)=\"gotoManage()\">Manage</button>\r\n  </mat-dialog-actions>\r\n\r\n"
+module.exports = "<mat-dialog-content>\r\n<div id=\"servicebot-request-form\"></div>\r\n</mat-dialog-content>\r\n<mat-dialog-actions align=\"end\" *ngIf=\"isLogged()\">\r\n    <button class=\"matBtn\" mat-button cdkFocusInitial (click)=\"gotoManage()\">Manage</button>\r\n  </mat-dialog-actions>\r\n\r\n"
 
 /***/ }),
 
@@ -304,7 +304,7 @@ module.exports = "<!-- Title group  -->\r\n<div class=\"title-group\">\r\n  <div
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Title group  -->\r\n<div class=\"title-group\">\r\n    <div class=\"main\">\r\n      <h1 class=\"mat-h1\">{{projectName}} - Project Register Sheets</h1>\r\n      <button  [matMenuTriggerFor]=\"menu\" class=\"top-btn\" mat-raised-button color=\"basic\">\r\n        <mat-icon>keyboard_arrow_down</mat-icon>\r\n      </button>\r\n      <mat-menu #menu=\"matMenu\">\r\n        <button mat-menu-item [routerLink]=\"['/project_rev/getAll/',projectId]\">\r\n          <mat-icon>autorenew</mat-icon>\r\n          <span>Revisions</span>\r\n        </button>\r\n        <button mat-menu-item [routerLink]=\"['/project_obj/getAll/',projectId]\">\r\n          <mat-icon>check_circle</mat-icon>\r\n          <span>Objects</span>\r\n        </button>\r\n        <button mat-menu-item [routerLink]=\"['/project_sheet/getAll/',projectId]\">\r\n          <mat-icon>lock</mat-icon>\r\n          <span>Register Sheet</span>\r\n        </button>\r\n        <button mat-menu-item  [routerLink]=\"['/project_mech/getAll/',projectId]\"> \r\n          <mat-icon>schedule</mat-icon>\r\n          <span>Mechanical Schedule</span>\r\n        </button>\r\n        <button mat-menu-item  [routerLink]=\"['/project-service-data/getAll/',projectId]\"> \r\n          <mat-icon>schedule</mat-icon>\r\n          <span>Electrical Schedule</span>\r\n        </button>\r\n        <button mat-menu-item [routerLink]=\"['/project_notes/getAll/',projectId]\">\r\n          <mat-icon>chat_bubble_outline</mat-icon>\r\n          <span>Notes</span>\r\n        </button>\r\n        <button mat-menu-item [routerLink]=\"['/generate-pdf/',projectId]\">\r\n          <mat-icon>cloud_download</mat-icon>\r\n          <span>Generate PDF</span>\r\n        </button>               \r\n      </mat-menu>\r\n  \r\n      </div>\r\n    <mat-divider class=\"mat-divider\" ></mat-divider>\r\n\r\n    <input type=\"file\" class=\"top-btn mat-raised-button  custom-file-input\" id=\"importexcel\" name=\"importexcel\"\r\n          (change)=\"onFileSelect($event)\" [(ngModel)]=\"UploadFileInput\" >\r\n  </div>\r\n\r\n  \r\n  \r\n  <div class=\"container view-table\" style=\"margin-top: 70px;\" >\r\n      <div class=\"mat-elevation-z8\">\r\n  <form [formGroup]=\"userTable\">\r\n    <table  class=\"table \">\r\n      <thead class=\"text-nowrap\">\r\n        <th>Item Name </th>\r\n        <th>Description A</th>\r\n        <th>Description B</th>\r\n        <th>Description C</th>\r\n        <th>Section</th>\r\n        <th>Item No</th>\r\n        <th>Date Issued</th>\r\n        <th>Rev issued</th>\r\n        <th>Action</th>\r\n\r\n      </thead>\r\n      <tbody>\r\n       \r\n        <ng-container formArrayName=\"tableRows\" *ngFor=\"let group of getFormControls.controls | paginate:config ; let i=index\">\r\n          <tr *ngIf=\"group.get('isEditable').value\" [formGroupName]=\"fieldGlobalIndex(i)\">\r\n            <td>\r\n              <mat-form-field>\r\n                <input matInput type=\"text\" formControlName=\"ITEM_NAME\">\r\n                <mat-error *ngIf=\"group.get('ITEM_NAME').errors && formSubmitAttempt \">\r\n                  You must provide a<strong> Item name</strong>\r\n                </mat-error>\r\n              </mat-form-field>\r\n            </td>\r\n            <td>\r\n              <mat-form-field>\r\n                <input matInput type=\"text\" formControlName=\"DESCRIPTION_A\">\r\n                <mat-error *ngIf=\"group.get('DESCRIPTION_A').errors && formSubmitAttempt \">\r\n                  You must provide a<strong> Description</strong>\r\n                </mat-error>\r\n              </mat-form-field>\r\n            </td>\r\n            <td>\r\n                <mat-form-field>\r\n                  <input matInput type=\"text\" formControlName=\"DESCRIPTION_B\">\r\n                </mat-form-field>\r\n              </td>\r\n              <td>\r\n                <mat-form-field>\r\n                  <input matInput type=\"text\" formControlName=\"DESCRIPTION_C\">\r\n                </mat-form-field>\r\n              </td>\r\n              <td>\r\n                <mat-form-field >\r\n                    <mat-label>Section</mat-label>\r\n                    <mat-select  formControlName=\"SECTION\">\r\n                      <mat-option *ngFor=\"let serv of section\" [value]=\"serv\">\r\n                        {{serv}}\r\n                      </mat-option>\r\n                    </mat-select>\r\n                    <mat-error *ngIf=\"group.get('SECTION').errors && formSubmitAttempt \">\r\n                      You must provide a<strong> Section</strong>\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n              </td>\r\n              <td>\r\n                <mat-form-field >\r\n                    <mat-label>Item No</mat-label>\r\n                    <mat-select formControlName=\"ITEM_NO\">\r\n                      <mat-option *ngFor=\"let comp of item_no\" [value]=\"comp\">\r\n                        {{comp}}\r\n                      </mat-option>\r\n                    </mat-select>\r\n                    <mat-error *ngIf=\"group.get('ITEM_NO').errors && formSubmitAttempt \">\r\n                      You must provide a<strong> ITEM_NO</strong>\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n              </td>\r\n              <td>\r\n                <mat-form-field>\r\n                    <input matInput matInput [matDatepicker]=\"picker\" formControlName=\"DATE_ISSUED\"  (dateChange)=\"formatDate($event,group)\">\r\n                    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n                    <mat-datepicker #picker></mat-datepicker>\r\n                    <mat-error *ngIf=\"group.get('DATE_ISSUED').errors && formSubmitAttempt \">\r\n                      You must provide a<strong> Date issued</strong>\r\n                    </mat-error>\r\n                </mat-form-field>\r\n              </td>\r\n              <td>\r\n                <mat-form-field>\r\n                  <input matInput type=\"text\" formControlName=\"REV_ISSUED\">\r\n\r\n                </mat-form-field>\r\n              </td>\r\n            \r\n              <td>\r\n                 <div class=\"action-btns\">\r\n           \r\n                <button  mat-raised-button color=\"primary\" class=\"push-right\"\r\n                  (click)=\"doneRow(group)\">Save</button>\r\n                <button *ngIf=\"isDelete\" mat-raised-button color=\"accent\" (click)=\"deleteRow(fieldGlobalIndex(i),group)\" class=\"push-right\">Delete</button>\r\n                <button  mat-raised-button color=\"accent\" (click)=\"cancel(group)\">Cancel</button>\r\n \r\n              </div>\r\n             \r\n              </td>\r\n          </tr>\r\n          <tr *ngIf=\"!group.get('isEditable').value\" >\r\n           \r\n            <td>\r\n              {{group.get('ITEM_NAME').value}}\r\n            </td>\r\n            <td>\r\n                {{group.get('DESCRIPTION_A').value}}\r\n            </td>\r\n            <td>\r\n                {{group.get('DESCRIPTION_B').value}}\r\n            </td>\r\n            <td>\r\n              {{group.get('DESCRIPTION_C').value}}\r\n            </td>\r\n            <td>\r\n                {{group.get('SECTION').value}}\r\n              </td>\r\n              <td>\r\n                {{group.get('ITEM_NO').value}}\r\n              </td>\r\n              <td>\r\n                {{group.get('DATE_ISSUED').value}}\r\n              </td>\r\n              <td>\r\n                {{group.get('REV_ISSUED').value}}\r\n              </td>\r\n            <td>\r\n              <div class=\"action-btns\">\r\n                <button  mat-raised-button color=\"primary\" class=\"push-right\"\r\n                (click)=\"editRow(group)\">Edit</button>\r\n                </div>      \r\n                </td>\r\n          </tr>\r\n        </ng-container>\r\n      </tbody>\r\n      <div class=\"action-container\">\r\n        <button mat-raised-button type=\"submit\" color=\"primary\" (click)=\"addRow()\">Add row</button>\r\n      </div>\r\n      <div style=\"float:right\">\r\n        <pagination-controls (pageChange)=\"pageChanged($event)\"></pagination-controls>\r\n    </div>\r\n    </table>\r\n   \r\n  </form>\r\n  </div>\r\n  \r\n  </div>\r\n  "
+module.exports = "<!-- Title group  -->\r\n<div class=\"title-group\">\r\n    <div class=\"main\">\r\n      <h1 class=\"mat-h1\">{{projectName}} - Project Register Sheets</h1>\r\n      <button  [matMenuTriggerFor]=\"menu\" class=\"top-btn\" mat-raised-button color=\"basic\">\r\n        <mat-icon>keyboard_arrow_down</mat-icon>\r\n      </button>\r\n      <mat-menu #menu=\"matMenu\">\r\n        <button mat-menu-item [routerLink]=\"['/project_rev/getAll/',projectId]\">\r\n          <mat-icon>autorenew</mat-icon>\r\n          <span>Revisions</span>\r\n        </button>\r\n        <button mat-menu-item [routerLink]=\"['/project_obj/getAll/',projectId]\">\r\n          <mat-icon>check_circle</mat-icon>\r\n          <span>Objects</span>\r\n        </button>\r\n        <button mat-menu-item [routerLink]=\"['/project_sheet/getAll/',projectId]\">\r\n          <mat-icon>lock</mat-icon>\r\n          <span>Register Sheet</span>\r\n        </button>\r\n        <button mat-menu-item  [routerLink]=\"['/project_mech/getAll/',projectId]\"> \r\n          <mat-icon>schedule</mat-icon>\r\n          <span>Mechanical Schedule</span>\r\n        </button>\r\n        <button mat-menu-item  [routerLink]=\"['/project-service-data/getAll/',projectId]\"> \r\n          <mat-icon>schedule</mat-icon>\r\n          <span>Electrical Schedule</span>\r\n        </button>\r\n        <button mat-menu-item [routerLink]=\"['/project_notes/getAll/',projectId]\">\r\n          <mat-icon>chat_bubble_outline</mat-icon>\r\n          <span>Notes</span>\r\n        </button>\r\n        <button mat-menu-item [routerLink]=\"['/generate-pdf/',projectId]\">\r\n          <mat-icon>cloud_download</mat-icon>\r\n          <span>Generate PDF</span>\r\n        </button>               \r\n      </mat-menu>\r\n  \r\n      </div>\r\n    <mat-divider class=\"mat-divider\" ></mat-divider>\r\n\r\n    <input type=\"file\" class=\"top-btn mat-raised-button  custom-file-input\" id=\"importexcel\" name=\"importexcel\"\r\n          (change)=\"onFileSelect($event)\" [(ngModel)]=\"UploadFileInput\" >\r\n  </div>\r\n\r\n  \r\n  \r\n  <div class=\"container view-table\" style=\"margin-top: 70px;\" >\r\n      <div class=\"mat-elevation-z8\">\r\n  <form [formGroup]=\"userTable\">\r\n    <table  class=\"table \">\r\n      <thead class=\"text-nowrap\">\r\n        <th>Item Name </th>\r\n        <th>Description A</th>\r\n        <th>Description B</th>\r\n        <th>Description C</th>\r\n        <th>Section</th>\r\n        <th>Item No</th>\r\n        <th>Date Issued</th>\r\n        <th>Rev issued</th>\r\n        <th>Action</th>\r\n\r\n      </thead>\r\n      <tbody>\r\n       \r\n        <ng-container formArrayName=\"tableRows\" *ngFor=\"let group of getFormControls.controls | paginate:config ; let i=index\">\r\n          <tr *ngIf=\"group.get('isEditable').value\" [formGroupName]=\"fieldGlobalIndex(i)\">\r\n            <td>\r\n              <mat-form-field>\r\n                <input matInput type=\"text\" formControlName=\"ITEM_NAME\">\r\n                <mat-error *ngIf=\"group.get('ITEM_NAME').errors && formSubmitAttempt \">\r\n                  You must provide a<strong> Item name</strong>\r\n                </mat-error>\r\n              </mat-form-field>\r\n            </td>\r\n            <td>\r\n              <mat-form-field>\r\n                <mat-select  formControlName=\"DESCRIPTION_A\">\r\n                  <mat-option *ngFor=\"let page of pageNames\" [value]=\"page\">\r\n                    {{page}}\r\n                  </mat-option>\r\n                </mat-select>\r\n                <!-- <input matInput type=\"text\" formControlName=\"DESCRIPTION_A\"> -->\r\n                <mat-error *ngIf=\"group.get('DESCRIPTION_A').errors && formSubmitAttempt \">\r\n                  You must provide a<strong> Description</strong>\r\n                </mat-error>\r\n              </mat-form-field>\r\n            </td>\r\n            <td>\r\n                <mat-form-field>\r\n                  <input matInput type=\"text\" formControlName=\"DESCRIPTION_B\">\r\n                </mat-form-field>\r\n              </td>\r\n              <td>\r\n                <mat-form-field>\r\n                  <input matInput type=\"text\" formControlName=\"DESCRIPTION_C\">\r\n                </mat-form-field>\r\n              </td>\r\n              <td>\r\n                <mat-form-field >\r\n                    <mat-label>Section</mat-label>\r\n                    <mat-select  formControlName=\"SECTION\">\r\n                      <mat-option *ngFor=\"let serv of section\" [value]=\"serv\">\r\n                        {{serv}}\r\n                      </mat-option>\r\n                    </mat-select>\r\n                    <mat-error *ngIf=\"group.get('SECTION').errors && formSubmitAttempt \">\r\n                      You must provide a<strong> Section</strong>\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n              </td>\r\n              <td>\r\n                <mat-form-field >\r\n                    <mat-label>Item No</mat-label>\r\n                    <mat-select formControlName=\"ITEM_NO\">\r\n                      <mat-option *ngFor=\"let comp of item_no\" [value]=\"comp\">\r\n                        {{comp}}\r\n                      </mat-option>\r\n                    </mat-select>\r\n                    <mat-error *ngIf=\"group.get('ITEM_NO').errors && formSubmitAttempt \">\r\n                      You must provide a<strong> ITEM_NO</strong>\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n              </td>\r\n              <td>\r\n                <mat-form-field>\r\n                    <input matInput matInput [matDatepicker]=\"picker\" formControlName=\"DATE_ISSUED\"  (dateChange)=\"formatDate($event,group)\">\r\n                    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n                    <mat-datepicker #picker></mat-datepicker>\r\n                    <mat-error *ngIf=\"group.get('DATE_ISSUED').errors && formSubmitAttempt \">\r\n                      You must provide a<strong> Date issued</strong>\r\n                    </mat-error>\r\n                </mat-form-field>\r\n              </td>\r\n              <td>\r\n                <mat-form-field>\r\n                  <input matInput type=\"text\" formControlName=\"REV_ISSUED\">\r\n\r\n                </mat-form-field>\r\n              </td>\r\n            \r\n              <td>\r\n                 <div class=\"action-btns\">\r\n           \r\n                <button  mat-raised-button color=\"primary\" class=\"push-right\"\r\n                  (click)=\"doneRow(group)\">Save</button>\r\n                <button *ngIf=\"isDelete\" mat-raised-button color=\"accent\" (click)=\"deleteRow(fieldGlobalIndex(i),group)\" class=\"push-right\">Delete</button>\r\n                <button  mat-raised-button color=\"accent\" (click)=\"cancel(group)\">Cancel</button>\r\n \r\n              </div>\r\n             \r\n              </td>\r\n          </tr>\r\n          <tr *ngIf=\"!group.get('isEditable').value\" >\r\n           \r\n            <td>\r\n              {{group.get('ITEM_NAME').value}}\r\n            </td>\r\n            <td>\r\n                {{group.get('DESCRIPTION_A').value}}\r\n            </td>\r\n            <td>\r\n                {{group.get('DESCRIPTION_B').value}}\r\n            </td>\r\n            <td>\r\n              {{group.get('DESCRIPTION_C').value}}\r\n            </td>\r\n            <td>\r\n                {{group.get('SECTION').value}}\r\n              </td>\r\n              <td>\r\n                {{group.get('ITEM_NO').value}}\r\n              </td>\r\n              <td>\r\n                {{group.get('DATE_ISSUED').value}}\r\n              </td>\r\n              <td>\r\n                {{group.get('REV_ISSUED').value}}\r\n              </td>\r\n            <td>\r\n              <div class=\"action-btns\">\r\n                <button  mat-raised-button color=\"primary\" class=\"push-right\"\r\n                (click)=\"editRow(group)\">Edit</button>\r\n                </div>      \r\n                </td>\r\n          </tr>\r\n        </ng-container>\r\n      </tbody>\r\n      <div class=\"action-container\">\r\n        <button mat-raised-button type=\"submit\" color=\"primary\" (click)=\"addRow()\">Add row</button>\r\n      </div>\r\n      <div style=\"float:right\">\r\n        <pagination-controls (pageChange)=\"pageChanged($event)\"></pagination-controls>\r\n    </div>\r\n    </table>\r\n   \r\n  </form>\r\n  </div>\r\n  \r\n  </div>\r\n  "
 
 /***/ }),
 
@@ -986,6 +986,7 @@ var AppComponent = /** @class */ (function () {
         });
     };
     AppComponent.prototype.ngOnInit = function () {
+        this.isLogged = false;
         this.currentUser = this.auth.currentUserValue;
         if (this.currentUser) {
             if (this.currentUser.isAdmin == "1") {
@@ -1731,13 +1732,14 @@ var CreatesubscriptionComponent = /** @class */ (function () {
         this.loadScripts();
     }
     CreatesubscriptionComponent.prototype.ngOnInit = function () {
+        this.isvisible = false;
         var user = localStorage.getItem('UserRegister');
         var apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].APIEndpoint;
         this.currentUser = JSON.parse(user);
         console.log(this.currentUser);
         var script = this._renderer2.createElement('script');
         script.type = "text/javascript";
-        script.text = "\n    Servicebot.init({\n      templateId : 1,\n      url : \"" + apiUrl + "\",\n      selector : document.getElementById('servicebot-request-form'),\n      handleResponse : (response) => {\n       if(response!=undefined){\n        function makeRequest (method, url, data) {\n          return new Promise(function (resolve, reject) {\n            var xhr = new XMLHttpRequest();\n            xhr.open(method, url);\n            xhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\n            xhr.onload = function () {\n              if (this.status >= 200 && this.status < 300) {\n                resolve(xhr.response);\n              } else {\n                reject({\n                  status: this.status,\n                  statusText: xhr.statusText\n                });\n              }\n            };\n            xhr.onerror = function () {\n              reject({\n                status: this.status,\n                statusText: xhr.statusText\n              });\n            };\n            if(method==\"POST\" && data){\n                xhr.send(JSON.stringify(data));\n            }else{\n                xhr.send();\n            }\n          });\n        }\n\n        var data=this.currentUser;\n        data=JSON.parse(localStorage.getItem('UserRegister'));\n        var envAPI=\"" + apiUrl + "\";\n        console.log(data);\n        makeRequest('POST', envAPI+\"/api/v1/users/application/register\",data).then(function(data){\n                      var results=JSON.parse(data);\n                      alert(\"You have been successfully registered\");\n        });\n       }\n      },\n      type: \"request\",\n      spk: \"pk_test_51Hk5E2HRkt4pM4voJCzKPxwsFx4KQamuuLw5ouoI1POpvbSIhpoqRsgeDQMLZQwHGWCQsVeAqBxo3GddsskeK1WB00Aav17VXZ\",\n      forceCard : false, //set to true if you want credit card to be a required field for the customer\n      setPassword : false //set to true if you want customer to fill out a password\n  })  \n  \n  ";
+        script.text = "\n    Servicebot.init({\n      templateId : 1,\n      url : \"" + apiUrl + "\",\n      selector : document.getElementById('servicebot-request-form'),\n      handleResponse : (response) => {\n       if(response!=undefined){\n        function makeRequest (method, url, data) {\n          return new Promise(function (resolve, reject) {\n            var xhr = new XMLHttpRequest();\n            xhr.open(method, url);\n            xhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\n            xhr.onload = function () {\n              if (this.status >= 200 && this.status < 300) {\n                resolve(xhr.response);\n              } else {\n                reject({\n                  status: this.status,\n                  statusText: xhr.statusText\n                });\n              }\n            };\n            xhr.onerror = function () {\n              reject({\n                status: this.status,\n                statusText: xhr.statusText\n              });\n            };\n            if(method==\"POST\" && data){\n                xhr.send(JSON.stringify(data));\n            }else{\n                xhr.send();\n            }\n          });\n        }\n\n        var data=this.currentUser;\n        data=JSON.parse(localStorage.getItem('UserRegister'));\n        var envAPI=\"" + apiUrl + "\";\n        console.log(data);\n        makeRequest('POST', envAPI+\"/api/v1/users/application/register\",data).then(function(data){\n                      var results=JSON.parse(data);\n                      alert(\"You have been successfully registered\");\n                     \n        });\n       }\n      },\n      type: \"request\",\n      spk: \"pk_test_51Hk5E2HRkt4pM4voJCzKPxwsFx4KQamuuLw5ouoI1POpvbSIhpoqRsgeDQMLZQwHGWCQsVeAqBxo3GddsskeK1WB00Aav17VXZ\",\n      forceCard : false, //set to true if you want credit card to be a required field for the customer\n      setPassword : false //set to true if you want customer to fill out a password\n  })  \n  \n  ";
         console.log(script.text);
         this._renderer2.appendChild(this._document.body, script);
         this.existCondition = setInterval(function () {
@@ -1768,6 +1770,16 @@ var CreatesubscriptionComponent = /** @class */ (function () {
     };
     CreatesubscriptionComponent.prototype.close = function () {
         this.dialog.closeAll();
+    };
+    CreatesubscriptionComponent.prototype.isLogged = function () {
+        if (this.auth.currentUserValue) {
+            console.log(this.isvisible);
+            return true;
+        }
+        else {
+            console.log(this.isvisible);
+            return false;
+        }
     };
     CreatesubscriptionComponent.prototype.manage = function () {
         var dialogRef = this.dialog.open(_manage_manage_component__WEBPACK_IMPORTED_MODULE_8__["ManageComponent"], {
@@ -1849,10 +1861,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ManageComponent", function() { return ManageComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _shared_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../shared/api.service */ "./src/app/shared/api.service.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../_services/authentication.service */ "./src/app/_services/authentication.service.ts");
+
+
 
 
 
@@ -1860,11 +1876,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ManageComponent = /** @class */ (function () {
-    function ManageComponent(commonSevice, _renderer2, _document, dialog) {
+    function ManageComponent(commonSevice, _renderer2, _document, dialog, router, auth) {
         this.commonSevice = commonSevice;
         this._renderer2 = _renderer2;
         this._document = _document;
         this.dialog = dialog;
+        this.router = router;
+        this.auth = auth;
         this.loadScripts();
     }
     ManageComponent.prototype.ngOnInit = function () {
@@ -1878,13 +1896,17 @@ var ManageComponent = /** @class */ (function () {
                 console.log(_this.token);
                 var script = _this._renderer2.createElement('script');
                 script.type = "text/javascript";
-                script.text = "\n      Servicebot.init({\n        url : " + "\"" + _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].APIEndpoint + "\"" + ",\n        selector : document.getElementById('servicebot-management-form'),\n        type : \"manage\",\n        token: " + "\"" + _this.token + "\"" + ",\n        handleResponse: (response) => {\n\t\tconsole.log(response);\n            //determine what to do on certain events...\n        }\n    })\n \n        ";
+                script.text = "\n      Servicebot.init({\n        url : " + "\"" + _environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].APIEndpoint + "\"" + ",\n        selector : document.getElementById('servicebot-management-form'),\n        type : \"manage\",\n        token: " + "\"" + _this.token + "\"" + ",\n        handleResponse: (response) => {\n\t\t      \n        }\n    })\n \n        ";
                 _this._renderer2.appendChild(_this._document.body, script);
             });
         }
     };
     ManageComponent.prototype.close = function () {
         this.dialog.closeAll();
+    };
+    ManageComponent.prototype.logout = function () {
+        this.auth.logout();
+        this.router.navigate(['/login']);
     };
     ManageComponent.prototype.loadScripts = function () {
         // This array contains all the files/CDNs 
@@ -1903,19 +1925,21 @@ var ManageComponent = /** @class */ (function () {
     };
     ManageComponent.ctorParameters = function () { return [
         { type: _shared_api_service__WEBPACK_IMPORTED_MODULE_1__["ApiService"] },
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Renderer2"] },
-        { type: Document, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"], args: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["DOCUMENT"],] }] },
-        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialog"] }
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Renderer2"] },
+        { type: Document, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"], args: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["DOCUMENT"],] }] },
+        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_5__["MatDialog"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+        { type: _services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"] }
     ]; };
     ManageComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
             selector: 'app-manage',
             template: __webpack_require__(/*! raw-loader!./manage.component.html */ "./node_modules/raw-loader/index.js!./src/app/components/billing/manage/manage.component.html"),
             styles: [__webpack_require__(/*! ./manage.component.css */ "./src/app/components/billing/manage/manage.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_3__["DOCUMENT"])),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_shared_api_service__WEBPACK_IMPORTED_MODULE_1__["ApiService"], _angular_core__WEBPACK_IMPORTED_MODULE_2__["Renderer2"],
-            Document, _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialog"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_4__["DOCUMENT"])),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_shared_api_service__WEBPACK_IMPORTED_MODULE_1__["ApiService"], _angular_core__WEBPACK_IMPORTED_MODULE_3__["Renderer2"],
+            Document, _angular_material_dialog__WEBPACK_IMPORTED_MODULE_5__["MatDialog"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]])
     ], ManageComponent);
     return ManageComponent;
 }());
@@ -2917,36 +2941,43 @@ var LoginComponent = /** @class */ (function () {
         this.authenticationService.auth(this.loginForm.value.email, this.loginForm.value.password)
             .subscribe(function (data) {
             console.log(data);
-            var user = new src_app_models_User__WEBPACK_IMPORTED_MODULE_10__["User"]();
-            if (data.permissions.includes("can_administrate")) {
-                user.isAdmin = "1";
-            }
-            else {
-                user.isAdmin = "0";
-            }
-            //this.router.navigate([this.returnUrl]);
-            if (data.message.includes("successful")) {
-                var dat = {
-                    email: _this.loginForm.value.email,
-                    password: _this.loginForm.value.password
-                };
-                _this.commonService.Add(dat, 'users/getToken').subscribe(function (data) {
-                    console.log(data);
-                    localStorage.setItem('registerUser', _this.f.email.value);
-                    user.emailAddress = data.email;
-                    user.password = data.password;
-                    user.firstName = '';
-                    user.lastName = '';
-                    user.token = data.token;
-                    console.log(user);
-                    _this.authenticationService.setUser(user);
-                    window.location.reload();
-                });
-            }
-            else {
+            if (data.error == "Invalid username or password") {
                 _this.ms.openSnackBar("Invalid username or password");
                 _this.loading = false;
                 _this.loader.hide();
+            }
+            else {
+                var user = new src_app_models_User__WEBPACK_IMPORTED_MODULE_10__["User"]();
+                if (data.permissions.includes("can_administrate")) {
+                    user.isAdmin = "1";
+                }
+                else {
+                    user.isAdmin = "0";
+                }
+                //this.router.navigate([this.returnUrl]);
+                if (data.message.includes("successful")) {
+                    var dat = {
+                        email: _this.loginForm.value.email,
+                        password: _this.loginForm.value.password
+                    };
+                    _this.commonService.Add(dat, 'users/getToken').subscribe(function (data) {
+                        console.log(data);
+                        localStorage.setItem('registerUser', _this.f.email.value);
+                        user.emailAddress = data.email;
+                        user.password = data.password;
+                        user.firstName = '';
+                        user.lastName = '';
+                        user.token = data.token;
+                        console.log(user);
+                        _this.authenticationService.setUser(user);
+                        window.location.reload();
+                    });
+                }
+                else {
+                    _this.ms.openSnackBar("Invalid username or password");
+                    _this.loading = false;
+                    _this.loader.hide();
+                }
             }
         }, function (error) {
             _this.ms.openSnackBar("Invalid username or password");
@@ -6383,6 +6414,7 @@ var ProjectRegisterSheetComponent = /** @class */ (function () {
         this.item_no = [];
         this.rev_issued = [];
         this.numbersList = [];
+        this.pageNames = [];
         this.alphaList = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
         this.handleError = function (controlName, errorName) {
             return _this.control.controls[controlName].hasError(errorName);
@@ -6396,6 +6428,13 @@ var ProjectRegisterSheetComponent = /** @class */ (function () {
             currentPage: 1,
             totalItems: 0
         };
+        this.pageNames = [];
+        this.pageNames.push("Cover Page");
+        this.pageNames.push("Mechanical Equipment");
+        this.pageNames.push("Electrical Equipment");
+        this.pageNames.push("Notes");
+        this.pageNames.push("Schedule");
+        this.pageNames.push("Diagram");
         this.formSubmitAttempt = false;
         this.touchedRows = [];
         this.userTable = this.fb.group({
@@ -10304,7 +10343,7 @@ var GeneratePdfComponent = /** @class */ (function () {
             });
         });
     };
-    GeneratePdfComponent.prototype.CreatePDFPage = function (pdfDoc, pageType) {
+    GeneratePdfComponent.prototype.CreatePDFPage = function (pdfDoc, pageType, pageName) {
         // Add a blank page to the document
         var page;
         if (this.pageSize == 'a3') {
@@ -10335,10 +10374,10 @@ var GeneratePdfComponent = /** @class */ (function () {
             opacity: 0,
             borderOpacity: 0.75,
         });
-        this.insertTitleBlock(page, pageType);
+        this.insertTitleBlock(page, pageType, pageName);
         return page;
     };
-    GeneratePdfComponent.prototype.insertTitleBlock = function (page, pageType) {
+    GeneratePdfComponent.prototype.insertTitleBlock = function (page, pageType, pageName) {
         var firstsection = 20;
         var secondsection = 120;
         var thirdsection = 70;
@@ -10378,6 +10417,14 @@ var GeneratePdfComponent = /** @class */ (function () {
         var desca = title[0].DESCRIPTION_A;
         var descb = title[0].DESCRIPTION_B;
         var descc = title[0].DESCRIPTION_C;
+        console.log('title :', title);
+        console.log('pageName :', pageName);
+        var subtitle = title.filter(function (x) { return x.DESCRIPTION_A.toUpperCase().indexOf(pageName.toUpperCase()) > -1; });
+        if (subtitle.length > 0) {
+            desca = subtitle[0].DESCRIPTION_A;
+            descb = subtitle[0].DESCRIPTION_B;
+            descc = subtitle[0].DESCRIPTION_C;
+        }
         //rev + sheet title
         this.drawRectangle(page, startPosX - thirdsection - 5, startPosY, thirdsection, lineHeight);
         this.writeText(page, startPosX - thirdsection, startPosY + 5, "REV - " + this.projRevisions[this.projRevisions.length - 1].REV_NO, this.blockFontSize);
@@ -10471,7 +10518,7 @@ var GeneratePdfComponent = /** @class */ (function () {
                         console.log('added mech notes page');
                         this.insertInputData(pdfDoc, "MECHANICAL");
                         console.log('added data table');
-                        page = this.CreatePDFPage(pdfDoc, "MECHANICAL");
+                        page = this.CreatePDFPage(pdfDoc, "MECHANICAL", "DRAWING");
                         this.AddImagetoPDF(pdfDoc, page, imgType, uriData.mechURI);
                         console.log('image inserted');
                         this.addNotesPage(pdfDoc, "Electrical");
@@ -10481,7 +10528,7 @@ var GeneratePdfComponent = /** @class */ (function () {
                         this.insertInputData(pdfDoc, "CIRCUIT");
                         this.insertInputData(pdfDoc, "RACEWAY");
                         console.log('added data table');
-                        page = this.CreatePDFPage(pdfDoc, "ELECTRICAL");
+                        page = this.CreatePDFPage(pdfDoc, "ELECTRICAL", "DRAWING");
                         this.AddImagetoPDF(pdfDoc, page, imgType, uriData.electricalURI);
                         console.log('image inserted');
                         return [4 /*yield*/, pdfDoc.save()];
@@ -10502,7 +10549,7 @@ var GeneratePdfComponent = /** @class */ (function () {
         var startPosX = this.initPosition + 10;
         var notes = this.projNotes.filter(function (x) { return x.NOTE_CATEGORY == section; });
         if (notes.length > 0) {
-            page = this.CreatePDFPage(pdfDoc, section.toUpperCase());
+            page = this.CreatePDFPage(pdfDoc, section.toUpperCase(), "NOTES");
             var topPos = page.getHeight() - 40;
             for (var i = 0; i < notes.length; i++) {
                 console.log('notes[i].NOTE_TEXT : ', notes[i].NOTE_TEXT);
@@ -10558,7 +10605,7 @@ var GeneratePdfComponent = /** @class */ (function () {
     GeneratePdfComponent.prototype.insertInputData = function (pdfDoc, section) {
         // var table = document.getElementById("inputtatble");
         var pageblock = section == "MECHANICAL" ? "MECHANICAL" : "ELECTRICAL";
-        var page = this.CreatePDFPage(pdfDoc, pageblock);
+        var page = this.CreatePDFPage(pdfDoc, pageblock, "SCHEDULE");
         var rowCount = 0;
         var rowHeight = 30;
         var rowY = 0;
@@ -10627,7 +10674,7 @@ var GeneratePdfComponent = /** @class */ (function () {
             // if ((rowHeight * (pageRow + 2)) >= drawingHeight) {
             //   console.log('rowY , rowHeight , drawingHeight, rowY + rowHeight : ', rowY , rowHeight , drawingHeight, rowY + rowHeight)
             if (rowY - padding <= drawingHeight) {
-                page = this.CreatePDFPage(this.pdfDoc, pageblock); //got to next page
+                page = this.CreatePDFPage(this.pdfDoc, pageblock, "SCHEDULE"); //got to next page
                 startPosY = page.getHeight() - 70;
                 pageRow = 1;
                 if (wrapHeadingText)
@@ -10672,7 +10719,7 @@ var GeneratePdfComponent = /** @class */ (function () {
         }
     };
     GeneratePdfComponent.prototype.insertRegisterSheet = function () {
-        var page = this.CreatePDFPage(this.pdfDoc, "GENERAL"); //got to next page
+        var page = this.CreatePDFPage(this.pdfDoc, "GENERAL", "COVER PAGE"); //got to next page
         // var table = document.getElementById("inputtatble");
         var rowCount = 0;
         var colCount = 8;
@@ -10696,7 +10743,7 @@ var GeneratePdfComponent = /** @class */ (function () {
             //  for (var j = 0; j < this.hosts[i].length; j++) {
             drawingHeight = page.getHeight() - padding - this.blockTotalHeight;
             if ((rowHeight * (pageRow + 2)) >= drawingHeight) {
-                page = this.CreatePDFPage(this.pdfDoc, "GENERAL"); //got to next page
+                page = this.CreatePDFPage(this.pdfDoc, "GENERAL", "COVER PAGE"); //got to next page
                 startPosY = page.getHeight() - 70;
                 pageRow = 1;
                 for (colCount = 0; colCount < headings.length; colCount++) {
@@ -10727,7 +10774,7 @@ var GeneratePdfComponent = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        page = this.CreatePDFPage(this.pdfDoc, section);
+                        page = this.CreatePDFPage(this.pdfDoc, section, "EQUIPMENT");
                         firstPage = page;
                         headings = [], colheads = [];
                         main_data_table = [];
@@ -10759,7 +10806,7 @@ var GeneratePdfComponent = /** @class */ (function () {
                         for (i = 0; i < main_data_table.length; i++) {
                             drawingHeight = page.getHeight() - padding - this.blockTotalHeight;
                             if ((rowHeight * (pageRow + 2)) >= drawingHeight) {
-                                page = this.CreatePDFPage(this.pdfDoc, section); //got to next page
+                                page = this.CreatePDFPage(this.pdfDoc, section, "EQUIPMENT"); //got to next page
                                 startPosY = page.getHeight() - 70;
                                 pageRow = 1;
                                 for (colCount = 0; colCount < headings.length; colCount++) {

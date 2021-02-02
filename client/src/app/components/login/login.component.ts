@@ -68,6 +68,12 @@ export class LoginComponent implements OnInit {
                     
                           
                     console.log(data);
+                    if(data.error == "Invalid username or password"){
+                        this.ms.openSnackBar("Invalid username or password");
+                        this.loading = false;
+                        this.loader.hide();
+
+                    }else{
                     var user=new User();
                     if(data.permissions.includes("can_administrate")){
                        user.isAdmin="1";
@@ -101,6 +107,7 @@ export class LoginComponent implements OnInit {
                         this.loading = false;
                         this.loader.hide();
                     }
+                }
 
                 },
                 error => {

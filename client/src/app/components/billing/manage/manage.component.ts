@@ -8,6 +8,8 @@ import { Renderer2,Component, OnInit, ViewChild, NgZone, ElementRef, Inject } fr
 import {DOCUMENT} from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import{environment} from '../../../../environments/environment';
+import { AuthenticationService } from '../../../_services/authentication.service';
+
 
 
 @Component({
@@ -18,7 +20,7 @@ import{environment} from '../../../../environments/environment';
 export class ManageComponent implements OnInit {
   token:string
   constructor( private commonSevice: ApiService, private _renderer2: Renderer2, 
-               @Inject(DOCUMENT) private _document: Document,private dialog: MatDialog) { 
+               @Inject(DOCUMENT) private _document: Document,private dialog: MatDialog, private router:Router, private auth:AuthenticationService) { 
       this.loadScripts();
 
     }
@@ -44,8 +46,7 @@ export class ManageComponent implements OnInit {
         type : "manage",
         token: `+`"`+this.token+`"`+`,
         handleResponse: (response) => {
-		console.log(response);
-            //determine what to do on certain events...
+		      
         }
     })
  
@@ -60,6 +61,11 @@ export class ManageComponent implements OnInit {
 
   close(){
     this.dialog.closeAll();
+  }
+  logout(){
+    this.auth.logout();
+    this.router.navigate(['/login'] );
+
   }
   loadScripts() { 
   

@@ -26,6 +26,7 @@ export class CreatesubscriptionComponent implements OnInit {
   currentUser:User;
   emailUser:string;
   existCondition:any;
+  isvisible:boolean;
 
   /*serviceBotParams = {
     servicebot_id: 'E0OQN0P0Dort',  // LIVE & TEST MODE IDs ARE DIFFERENT
@@ -47,7 +48,7 @@ export class CreatesubscriptionComponent implements OnInit {
   ngOnInit() {
 
     
-    
+    this.isvisible=false;
     var user=localStorage.getItem('UserRegister');
     var apiUrl=environment.APIEndpoint;
     this.currentUser=JSON.parse(user);
@@ -97,6 +98,7 @@ export class CreatesubscriptionComponent implements OnInit {
         makeRequest('POST', envAPI+"/api/v1/users/application/register",data).then(function(data){
                       var results=JSON.parse(data);
                       alert("You have been successfully registered");
+                     
         });
        }
       },
@@ -140,6 +142,17 @@ export class CreatesubscriptionComponent implements OnInit {
   }
   close(){
     this.dialog.closeAll();
+  }
+  
+  isLogged(){
+    if (this.auth.currentUserValue) { 
+      console.log(this.isvisible);
+      return true;
+    }
+    else{
+      console.log(this.isvisible);
+      return false;
+    }
   }
 
   manage(){
