@@ -57,6 +57,9 @@ export class AuthenticationService {
         this.currentUserSubject.next(user);
         this.isLogged=true;
     }
+    public getToken(){
+        return !!localStorage.getItem("currentUser"); 
+    }
 
     logout() {
         // remove user from local storage to log user out

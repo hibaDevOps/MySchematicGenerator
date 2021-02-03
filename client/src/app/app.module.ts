@@ -74,8 +74,9 @@ import {RegisterComponent} from './components/register/register.component';
 import {LoginComponent} from './components/login/login.component';
 import {ChangePasswordComponent} from './components/change-password/change-password.component';
 import {InviteUsersComponent} from './components/invite-users/invite-users.component';
-
 /* angular service */
+import { AuthGuardService } from './_services/auth-guard.service';
+
 
 
 @NgModule({
@@ -147,7 +148,7 @@ import {InviteUsersComponent} from './components/invite-users/invite-users.compo
 
 
   ],
-  providers: [ApiService, MessageService,DatePipe 
+  providers: [ApiService, MessageService,DatePipe , AuthGuardService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

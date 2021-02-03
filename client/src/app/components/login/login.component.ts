@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit {
                             user.token=data.token;
                             console.log(user);
                             this.authenticationService.setUser(user);
-                            window.location.reload();
+                            window.location.href="/";
                         }
                         )
                   

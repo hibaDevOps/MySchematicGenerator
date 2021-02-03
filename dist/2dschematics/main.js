@@ -669,6 +669,53 @@ var AlertService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/_services/auth-guard.service.ts":
+/*!*************************************************!*\
+  !*** ./src/app/_services/auth-guard.service.ts ***!
+  \*************************************************/
+/*! exports provided: AuthGuardService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuardService", function() { return AuthGuardService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _authentication_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./authentication.service */ "./src/app/_services/authentication.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
+
+
+
+var AuthGuardService = /** @class */ (function () {
+    function AuthGuardService(_authService, _router) {
+        this._authService = _authService;
+        this._router = _router;
+    }
+    AuthGuardService.prototype.canActivate = function (next, state) {
+        if (this._authService.getToken()) {
+            return true;
+        }
+        // navigate to login page
+        this._router.navigate(['/login']);
+        // you can save redirect url so after authing we can move them back to the page they requested
+        return false;
+    };
+    AuthGuardService.ctorParameters = function () { return [
+        { type: _authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
+    ]; };
+    AuthGuardService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], AuthGuardService);
+    return AuthGuardService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/_services/authentication.service.ts":
 /*!*****************************************************!*\
   !*** ./src/app/_services/authentication.service.ts ***!
@@ -736,6 +783,9 @@ var AuthenticationService = /** @class */ (function () {
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         this.isLogged = true;
+    };
+    AuthenticationService.prototype.getToken = function () {
+        return !!localStorage.getItem("currentUser");
     };
     AuthenticationService.prototype.logout = function () {
         // remove user from local storage to log user out
@@ -815,6 +865,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_forgot_password_forgot_password_component__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./components/forgot-password/forgot-password.component */ "./src/app/components/forgot-password/forgot-password.component.ts");
 /* harmony import */ var _components_change_password_change_password_component__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./components/change-password/change-password.component */ "./src/app/components/change-password/change-password.component.ts");
 /* harmony import */ var _components_invite_users_invite_users_component__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./components/invite-users/invite-users.component */ "./src/app/components/invite-users/invite-users.component.ts");
+/* harmony import */ var _services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./_services/auth-guard.service */ "./src/app/_services/auth-guard.service.ts");
+
 
 
 
@@ -866,49 +918,49 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [
     { path: '', pathMatch: 'full', component: _components_home_home_component__WEBPACK_IMPORTED_MODULE_8__["HomeComponent"] },
     { path: 'add-student', component: _components_add_student_add_student_component__WEBPACK_IMPORTED_MODULE_3__["AddStudentComponent"] },
-    { path: 'edit-services-value/:id', component: _components_edit_services_value_edit_services_value_component__WEBPACK_IMPORTED_MODULE_9__["EditServicesValueComponent"] },
-    { path: 'service/edit-service/:id', component: _components_edit_service_edit_service_component__WEBPACK_IMPORTED_MODULE_12__["EditServiceComponent"] },
-    { path: 'edit-student/:id', component: _components_edit_student_edit_student_component__WEBPACK_IMPORTED_MODULE_4__["EditStudentComponent"] },
-    { path: 'students-list', component: _components_students_list_students_list_component__WEBPACK_IMPORTED_MODULE_5__["StudentsListComponent"] },
-    { path: 'get-all-services-size', component: _components_services_size_services_size_component__WEBPACK_IMPORTED_MODULE_6__["ServicesSizeComponent"] },
-    { path: 'add-services-size', component: _components_add_services_size_add_services_size_component__WEBPACK_IMPORTED_MODULE_7__["AddServicesSizeComponent"] },
-    { path: 'services/getAll', component: _components_services_services_component__WEBPACK_IMPORTED_MODULE_10__["ServicesComponent"] },
-    { path: 'service/add-service', component: _components_add_service_add_service_component__WEBPACK_IMPORTED_MODULE_11__["AddServiceComponent"] },
-    { path: 'pipes/getAll', component: _components_pipe_pipe_list_pipe_list_component__WEBPACK_IMPORTED_MODULE_13__["PipeListComponent"] },
-    { path: 'pipe/add-pipe', component: _components_pipe_add_pipe_add_pipe_component__WEBPACK_IMPORTED_MODULE_14__["AddPipeComponent"] },
-    { path: 'pipe/edit-pipe/:id', component: _components_pipe_edit_pipe_edit_pipe_component__WEBPACK_IMPORTED_MODULE_15__["EditPipeComponent"] },
-    { path: 'pipe/pipe-services', component: _components_pipe_pipe_services_pipe_services_component__WEBPACK_IMPORTED_MODULE_16__["PipeServicesComponent"] },
-    { path: 'component/getAll', component: _components_services_component_services_component_services_component_component__WEBPACK_IMPORTED_MODULE_17__["ServicesComponentComponent"] },
-    { path: 'component/add-component', component: _components_services_component_add_services_component_add_services_component_component__WEBPACK_IMPORTED_MODULE_18__["AddServicesComponentComponent"] },
-    { path: 'component/edit-component/:id', component: _components_services_component_edit_services_component_edit_services_component_component__WEBPACK_IMPORTED_MODULE_19__["EditServicesComponentComponent"] },
-    { path: 'project/getAll', component: _components_projects_project_lists_project_lists_component__WEBPACK_IMPORTED_MODULE_20__["ProjectListsComponent"] },
-    { path: 'project/add-project', component: _components_projects_add_projects_add_projects_component__WEBPACK_IMPORTED_MODULE_21__["AddProjectsComponent"] },
-    { path: 'project/edit-project/:id', component: _components_projects_edit_projects_edit_projects_component__WEBPACK_IMPORTED_MODULE_22__["EditProjectsComponent"] },
-    { path: 'project_rev/getAll', component: _components_project_revisions_project_revisions_project_revisions_component__WEBPACK_IMPORTED_MODULE_25__["ProjectRevisionsComponent"] },
-    { path: 'project_rev/add-project_rev', component: _components_project_revisions_add_project_revisions_add_project_revisions_component__WEBPACK_IMPORTED_MODULE_23__["AddProjectRevisionsComponent"] },
-    { path: 'project_rev/edit-project_rev/:id/:id1', component: _components_project_revisions_edit_project_revisions_edit_project_revisions_component__WEBPACK_IMPORTED_MODULE_24__["EditProjectRevisionsComponent"] },
-    { path: 'project_rev/getAll/:id', component: _components_project_revisions_project_revisions_project_revisions_component__WEBPACK_IMPORTED_MODULE_25__["ProjectRevisionsComponent"] },
-    { path: 'project_rev/add-project_rev/:id', component: _components_project_revisions_add_project_revisions_add_project_revisions_component__WEBPACK_IMPORTED_MODULE_23__["AddProjectRevisionsComponent"] },
-    { path: 'project_obj/edit-project_obj/:id/:id1', component: _components_project_objects_edit_project_objects_edit_project_objects_component__WEBPACK_IMPORTED_MODULE_28__["EditProjectObjectsComponent"] },
-    { path: 'project_obj/getAll/:id', component: _components_project_objects_project_objects_project_objects_component__WEBPACK_IMPORTED_MODULE_26__["ProjectObjectsComponent"] },
-    { path: 'project_obj/add-project_obj/:id', component: _components_project_objects_add_project_objects_add_project_objects_component__WEBPACK_IMPORTED_MODULE_27__["AddProjectObjectsComponent"] },
-    { path: 'project_sheet/edit-project_sheet/:id/:id1', component: _components_project_sheets_edit_project_sheets_edit_project_sheets_component__WEBPACK_IMPORTED_MODULE_29__["EditProjectSheetsComponent"] },
+    { path: 'edit-services-value/:id', component: _components_edit_services_value_edit_services_value_component__WEBPACK_IMPORTED_MODULE_9__["EditServicesValueComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'service/edit-service/:id', component: _components_edit_service_edit_service_component__WEBPACK_IMPORTED_MODULE_12__["EditServiceComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'edit-student/:id', component: _components_edit_student_edit_student_component__WEBPACK_IMPORTED_MODULE_4__["EditStudentComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'students-list', component: _components_students_list_students_list_component__WEBPACK_IMPORTED_MODULE_5__["StudentsListComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'get-all-services-size', component: _components_services_size_services_size_component__WEBPACK_IMPORTED_MODULE_6__["ServicesSizeComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'add-services-size', component: _components_add_services_size_add_services_size_component__WEBPACK_IMPORTED_MODULE_7__["AddServicesSizeComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'services/getAll', component: _components_services_services_component__WEBPACK_IMPORTED_MODULE_10__["ServicesComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'service/add-service', component: _components_add_service_add_service_component__WEBPACK_IMPORTED_MODULE_11__["AddServiceComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'pipes/getAll', component: _components_pipe_pipe_list_pipe_list_component__WEBPACK_IMPORTED_MODULE_13__["PipeListComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'pipe/add-pipe', component: _components_pipe_add_pipe_add_pipe_component__WEBPACK_IMPORTED_MODULE_14__["AddPipeComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'pipe/edit-pipe/:id', component: _components_pipe_edit_pipe_edit_pipe_component__WEBPACK_IMPORTED_MODULE_15__["EditPipeComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'pipe/pipe-services', component: _components_pipe_pipe_services_pipe_services_component__WEBPACK_IMPORTED_MODULE_16__["PipeServicesComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'component/getAll', component: _components_services_component_services_component_services_component_component__WEBPACK_IMPORTED_MODULE_17__["ServicesComponentComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'component/add-component', component: _components_services_component_add_services_component_add_services_component_component__WEBPACK_IMPORTED_MODULE_18__["AddServicesComponentComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'component/edit-component/:id', component: _components_services_component_edit_services_component_edit_services_component_component__WEBPACK_IMPORTED_MODULE_19__["EditServicesComponentComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project/getAll', component: _components_projects_project_lists_project_lists_component__WEBPACK_IMPORTED_MODULE_20__["ProjectListsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project/add-project', component: _components_projects_add_projects_add_projects_component__WEBPACK_IMPORTED_MODULE_21__["AddProjectsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project/edit-project/:id', component: _components_projects_edit_projects_edit_projects_component__WEBPACK_IMPORTED_MODULE_22__["EditProjectsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_rev/getAll', component: _components_project_revisions_project_revisions_project_revisions_component__WEBPACK_IMPORTED_MODULE_25__["ProjectRevisionsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_rev/add-project_rev', component: _components_project_revisions_add_project_revisions_add_project_revisions_component__WEBPACK_IMPORTED_MODULE_23__["AddProjectRevisionsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_rev/edit-project_rev/:id/:id1', component: _components_project_revisions_edit_project_revisions_edit_project_revisions_component__WEBPACK_IMPORTED_MODULE_24__["EditProjectRevisionsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_rev/getAll/:id', component: _components_project_revisions_project_revisions_project_revisions_component__WEBPACK_IMPORTED_MODULE_25__["ProjectRevisionsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_rev/add-project_rev/:id', component: _components_project_revisions_add_project_revisions_add_project_revisions_component__WEBPACK_IMPORTED_MODULE_23__["AddProjectRevisionsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_obj/edit-project_obj/:id/:id1', component: _components_project_objects_edit_project_objects_edit_project_objects_component__WEBPACK_IMPORTED_MODULE_28__["EditProjectObjectsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_obj/getAll/:id', component: _components_project_objects_project_objects_project_objects_component__WEBPACK_IMPORTED_MODULE_26__["ProjectObjectsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_obj/add-project_obj/:id', component: _components_project_objects_add_project_objects_add_project_objects_component__WEBPACK_IMPORTED_MODULE_27__["AddProjectObjectsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_sheet/edit-project_sheet/:id/:id1', component: _components_project_sheets_edit_project_sheets_edit_project_sheets_component__WEBPACK_IMPORTED_MODULE_29__["EditProjectSheetsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
     //{ path: 'project_sheet/getAll/:id', component: ProjectSheetsComponent},
-    { path: 'project_sheet/add-project_sheet/:id', component: _components_project_sheets_add_project_sheets_add_project_sheets_component__WEBPACK_IMPORTED_MODULE_30__["AddProjectSheetsComponent"] },
-    { path: 'project_notes/edit-project_notes/:id/:id1', component: _components_project_notes_edit_project_notes_edit_project_notes_component__WEBPACK_IMPORTED_MODULE_31__["EditProjectNotesComponent"] },
-    { path: 'project_notes/getAll/:id', component: _components_project_notes_project_notes_project_notes_component__WEBPACK_IMPORTED_MODULE_32__["ProjectNotesComponent"] },
-    { path: 'project_notes/add-project_notes/:id', component: _components_project_notes_add_project_notes_add_project_notes_component__WEBPACK_IMPORTED_MODULE_33__["AddProjectNotesComponent"] },
-    { path: 'project_mech/edit-project_mech/:id/:id1', component: _components_project_mech_edit_project_mech_edit_project_mech_component__WEBPACK_IMPORTED_MODULE_34__["EditProjectMechComponent"] },
-    { path: 'project_mech/getAll/:id', component: _components_project_mech_project_mech_project_mech_component__WEBPACK_IMPORTED_MODULE_35__["ProjectMechComponent"] },
-    { path: 'project_mech/add-project_mech/:id', component: _components_project_mech_add_project_mech_add_project_mech_component__WEBPACK_IMPORTED_MODULE_36__["AddProjectMechComponent"] },
-    { path: 'project_sheet/getAll/:id', component: _components_project_register_sheet_project_register_sheet_project_register_sheet_component__WEBPACK_IMPORTED_MODULE_37__["ProjectRegisterSheetComponent"] },
-    { path: 'generate-pdf/:id', component: _components_projects_generate_pdf_generate_pdf_component__WEBPACK_IMPORTED_MODULE_38__["GeneratePdfComponent"] },
+    { path: 'project_sheet/add-project_sheet/:id', component: _components_project_sheets_add_project_sheets_add_project_sheets_component__WEBPACK_IMPORTED_MODULE_30__["AddProjectSheetsComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_notes/edit-project_notes/:id/:id1', component: _components_project_notes_edit_project_notes_edit_project_notes_component__WEBPACK_IMPORTED_MODULE_31__["EditProjectNotesComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_notes/getAll/:id', component: _components_project_notes_project_notes_project_notes_component__WEBPACK_IMPORTED_MODULE_32__["ProjectNotesComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_notes/add-project_notes/:id', component: _components_project_notes_add_project_notes_add_project_notes_component__WEBPACK_IMPORTED_MODULE_33__["AddProjectNotesComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_mech/edit-project_mech/:id/:id1', component: _components_project_mech_edit_project_mech_edit_project_mech_component__WEBPACK_IMPORTED_MODULE_34__["EditProjectMechComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_mech/getAll/:id', component: _components_project_mech_project_mech_project_mech_component__WEBPACK_IMPORTED_MODULE_35__["ProjectMechComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_mech/add-project_mech/:id', component: _components_project_mech_add_project_mech_add_project_mech_component__WEBPACK_IMPORTED_MODULE_36__["AddProjectMechComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'project_sheet/getAll/:id', component: _components_project_register_sheet_project_register_sheet_project_register_sheet_component__WEBPACK_IMPORTED_MODULE_37__["ProjectRegisterSheetComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'generate-pdf/:id', component: _components_projects_generate_pdf_generate_pdf_component__WEBPACK_IMPORTED_MODULE_38__["GeneratePdfComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
     { path: 'billing/manage', component: _components_billing_manage_manage_component__WEBPACK_IMPORTED_MODULE_39__["ManageComponent"] },
     { path: 'billing/create-subscription', component: _components_billing_createsubscription_createsubscription_component__WEBPACK_IMPORTED_MODULE_40__["CreatesubscriptionComponent"] },
     { path: 'user/register', component: _components_register_register_component__WEBPACK_IMPORTED_MODULE_41__["RegisterComponent"] },
     { path: 'login', component: _components_login_login_component__WEBPACK_IMPORTED_MODULE_42__["LoginComponent"] },
-    { path: 'project-service-data/getAll/:id', component: _components_project_service_data_project_service_data_component__WEBPACK_IMPORTED_MODULE_43__["ProjectServiceDataComponent"] },
-    { path: 'upload_templates', component: _components_upload_templates_upload_templates_upload_templates_component__WEBPACK_IMPORTED_MODULE_44__["UploadTemplatesComponent"] },
+    { path: 'project-service-data/getAll/:id', component: _components_project_service_data_project_service_data_component__WEBPACK_IMPORTED_MODULE_43__["ProjectServiceDataComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
+    { path: 'upload_templates', component: _components_upload_templates_upload_templates_upload_templates_component__WEBPACK_IMPORTED_MODULE_44__["UploadTemplatesComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_48__["AuthGuardService"]] },
     { path: 'forgot-password', component: _components_forgot_password_forgot_password_component__WEBPACK_IMPORTED_MODULE_45__["ForgotPasswordComponent"] },
     { path: 'reset-password/:uid/:token', component: _components_change_password_change_password_component__WEBPACK_IMPORTED_MODULE_46__["ChangePasswordComponent"] },
     { path: 'invite-user', component: _components_invite_users_invite_users_component__WEBPACK_IMPORTED_MODULE_47__["InviteUsersComponent"] }
@@ -1170,6 +1222,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_login_login_component__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ./components/login/login.component */ "./src/app/components/login/login.component.ts");
 /* harmony import */ var _components_change_password_change_password_component__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ./components/change-password/change-password.component */ "./src/app/components/change-password/change-password.component.ts");
 /* harmony import */ var _components_invite_users_invite_users_component__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ./components/invite-users/invite-users.component */ "./src/app/components/invite-users/invite-users.component.ts");
+/* harmony import */ var _services_auth_guard_service__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ./_services/auth-guard.service */ "./src/app/_services/auth-guard.service.ts");
 
 
 
@@ -1240,6 +1293,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* angular service */
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -1310,7 +1364,7 @@ var AppModule = /** @class */ (function () {
                 ngx_pagination__WEBPACK_IMPORTED_MODULE_4__["NgxPaginationModule"],
                 _rxweb_reactive_form_validators__WEBPACK_IMPORTED_MODULE_55__["RxReactiveFormsModule"],
             ],
-            providers: [_shared_api_service__WEBPACK_IMPORTED_MODULE_50__["ApiService"], _shared_messageService__WEBPACK_IMPORTED_MODULE_51__["MessageService"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["DatePipe"]
+            providers: [_shared_api_service__WEBPACK_IMPORTED_MODULE_50__["ApiService"], _shared_messageService__WEBPACK_IMPORTED_MODULE_51__["MessageService"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["DatePipe"], _services_auth_guard_service__WEBPACK_IMPORTED_MODULE_62__["AuthGuardService"]
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]],
             schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_47__["CUSTOM_ELEMENTS_SCHEMA"]]
@@ -2976,7 +3030,7 @@ var LoginComponent = /** @class */ (function () {
                         user.token = data.token;
                         console.log(user);
                         _this.authenticationService.setUser(user);
-                        window.location.reload();
+                        window.location.href = "/";
                     });
                 }
                 else {
